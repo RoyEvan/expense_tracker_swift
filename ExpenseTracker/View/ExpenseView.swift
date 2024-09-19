@@ -27,6 +27,7 @@ struct ExpenseView: View {
             (name: "Other", count: 320, color: Color("chartColor5")),
     ]
     
+    
     private func findSelectedSector(value: Int) -> String? {
 
         var accumulatedCount = 0

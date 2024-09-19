@@ -72,6 +72,7 @@ struct AddTransactionView: View {
     }
 }
 
+
 #Preview {
     AddTransactionView(isPresented: .constant(true))
 }

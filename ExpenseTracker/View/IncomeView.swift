@@ -16,3 +16,4 @@ struct IncomeView: View {
 #Preview {
     IncomeView()
 }
+
