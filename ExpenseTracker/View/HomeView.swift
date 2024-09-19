@@ -12,25 +12,25 @@ struct HomeView: View {
     @State private var selectedSegment = 0
     
     let expenses = [
-            TransactionModel(title: "Groceries", date: "10/09/2024", amount: "-IDR 200.000", status: .expense),
-            TransactionModel(title: "Transport", date: "11/09/2024", amount: "-IDR 50.000", status: .expense),
-            TransactionModel(title: "Transport", date: "11/09/2024", amount: "-IDR 50.000", status: .expense),
-            TransactionModel(title: "Transport", date: "11/09/2024", amount: "-IDR 50.000", status: .expense)
-        ]
-        
-        let income = [
-            TransactionModel(title: "Salary", date: "01/09/2024", amount: "+IDR 5.000.000", status: .income),
-            TransactionModel(title: "Freelance", date: "05/09/2024", amount: "+IDR 2.000.000", status: .income),
-            TransactionModel(title: "Salary", date: "01/09/2024", amount: "+IDR 5.000.000", status: .income),
-            TransactionModel(title: "Freelance", date: "05/09/2024", amount: "+IDR 2.000.000", status: .income)
-        ]
+        TransactionModel(title: "Groceries", date: "10/09/2024", amount: "-IDR 200.000", status: .expense),
+        TransactionModel(title: "Transport", date: "11/09/2024", amount: "-IDR 50.000", status: .expense),
+        TransactionModel(title: "Transport", date: "11/09/2024", amount: "-IDR 50.000", status: .expense),
+        TransactionModel(title: "Transport", date: "11/09/2024", amount: "-IDR 50.000", status: .expense)
+    ]
+    
+    let income = [
+        TransactionModel(title: "Salary", date: "01/09/2024", amount: "+IDR 5.000.000", status: .income),
+        TransactionModel(title: "Freelance", date: "05/09/2024", amount: "+IDR 2.000.000", status: .income),
+        TransactionModel(title: "Salary", date: "01/09/2024", amount: "+IDR 5.000.000", status: .income),
+        TransactionModel(title: "Freelance", date: "05/09/2024", amount: "+IDR 2.000.000", status: .income)
+    ]
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 12){
                 AppButton(title: "+ Add First Income", textColor: .white, backgroundColor: "appColor").padding(.bottom, 8)
                 Text("Summary")
-                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/,alignment: .leading)
+                    .frame(maxWidth: .infinity,alignment: .leading)
                     .font(.headline)
                     .padding(.bottom, 8)
                 HStack{
@@ -44,11 +44,13 @@ struct HomeView: View {
                     NavigationLink(destination: GoalsView()){
                         AppCard(iconTitle: "📌", subTitle: "Goals 30%", money: "0")
                     }
+                    
+                    
                 }.padding(.bottom, 15)
                 
                 HStack{
                     Text("Recent Transaction")
-                        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/,alignment: .leading)
+                        .frame(maxWidth: .infinity,alignment: .leading)
                         .font(.headline)
                     Button(action: {
                         showingAddTransaction.toggle()
@@ -64,7 +66,7 @@ struct HomeView: View {
                         Text("Expenses").tag(0)
                         Text("Income").tag(1)
                     }.pickerStyle(SegmentedPickerStyle())
-                        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+                        .frame(maxWidth: .infinity)
                         .padding(.vertical, 8)
                     if selectedSegment == 0 {
                         List(expenses) { transaction in

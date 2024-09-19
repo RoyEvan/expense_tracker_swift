@@ -8,22 +8,28 @@
 import SwiftUI
 
 struct AppButton: View {
-    var title: String
-    var textColor: Color
-    var backgroundColor: String
+    var title: String = "Example Button"
+    var systemName: String = "plus"
+    var textColor: Color = .white
+    var backgroundColor: String = "appColor"
     var body: some View {
-        Text(title)
-            .font(.system(size: 20, weight: .bold, design: .default))
-            .frame(maxWidth: .infinity)
-            .frame(height: 60)
-            .foregroundColor(textColor)
-            .background(
-                Color(backgroundColor)
-            )
-            .cornerRadius(10)
+        HStack {
+            Image(systemName: systemName)
+            Text(title)
+                
+        }
+        .font(.system(size: 20, weight: .bold, design: .default))
+        .frame(maxWidth: .infinity)
+        .frame(height: 60)
+        .foregroundColor(textColor)
+        .background(
+            Color(backgroundColor)
+        )
+        .cornerRadius(10)
+        
     }
 }
 
 #Preview {
-    AppButton(title: "+ Add", textColor: .white, backgroundColor: "appColor")
+    AppButton()
 }

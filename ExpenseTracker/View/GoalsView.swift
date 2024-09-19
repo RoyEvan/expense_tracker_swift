@@ -8,8 +8,22 @@
 import SwiftUI
 
 struct GoalsView: View {
+    var goals: [GoalModel] = [GoalModel()]
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            VStack{
+                VStack {
+                    AppCardGoals().padding()
+                }
+                
+                Spacer()
+                
+                AppButton(title: "Add Your Goals").padding()
+            }
+            
+            .navigationTitle("Goals")
+            .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }
 

@@ -28,3 +28,7 @@ struct CardTransaction: View {
         .cornerRadius(12)
     }
 }
+
+#Preview {
+    CardTransaction(transaction: TransactionModel(title: "gatau beli apa", date: "05/09/2024", amount: "+IDR 2.000.000", status: .expense))
+}
