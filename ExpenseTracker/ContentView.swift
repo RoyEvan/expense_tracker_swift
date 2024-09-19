@@ -5,6 +5,7 @@
 //  Created by MacBook Air on 16/09/24.
 //
 
+import SwiftData
 import SwiftUI
 
 struct ContentView: View {

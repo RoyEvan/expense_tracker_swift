@@ -24,6 +24,8 @@
 		0412126C2C9855A8001333F1 /* AppCardTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412126B2C9855A8001333F1 /* AppCardTransaction.swift */; };
 		0412126F2C987489001333F1 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412126E2C987489001333F1 /* SplashScreenView.swift */; };
 		041212722C98ABEA001333F1 /* GoalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041212712C98ABE9001333F1 /* GoalsView.swift */; };
+		043328412C9C274F0086D79B /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043328402C9C274F0086D79B /* Example.swift */; };
+		043328432C9C39ED0086D79B /* AddGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043328422C9C39ED0086D79B /* AddGoalView.swift */; };
 		046C56422C9A740300759965 /* GoalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046C56412C9A740300759965 /* GoalModel.swift */; };
 		047E40BC2C99DA2600659068 /* AppCardGoals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047E40BB2C99DA2600659068 /* AppCardGoals.swift */; };
 /* End PBXBuildFile section */
@@ -66,6 +68,8 @@
 		0412126B2C9855A8001333F1 /* AppCardTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCardTransaction.swift; sourceTree = "<group>"; };
 		0412126E2C987489001333F1 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		041212712C98ABE9001333F1 /* GoalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsView.swift; sourceTree = "<group>"; };
+		043328402C9C274F0086D79B /* Example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example.swift; sourceTree = "<group>"; };
+		043328422C9C39ED0086D79B /* AddGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGoalView.swift; sourceTree = "<group>"; };
 		046C56412C9A740300759965 /* GoalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalModel.swift; sourceTree = "<group>"; };
 		047E40BB2C99DA2600659068 /* AppCardGoals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCardGoals.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -162,8 +166,10 @@
 				041212632C984179001333F1 /* IncomeView.swift */,
 				041212652C984192001333F1 /* ExpenseView.swift */,
 				041212672C9846F6001333F1 /* AddTransactionView.swift */,
+				043328402C9C274F0086D79B /* Example.swift */,
 				0412126E2C987489001333F1 /* SplashScreenView.swift */,
 				041212712C98ABE9001333F1 /* GoalsView.swift */,
+				043328422C9C39ED0086D79B /* AddGoalView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -328,6 +334,7 @@
 				046C56422C9A740300759965 /* GoalModel.swift in Sources */,
 				0412126A2C98554C001333F1 /* TransactionModel.swift in Sources */,
 				0412125D2C983108001333F1 /* HomeView.swift in Sources */,
+				043328432C9C39ED0086D79B /* AddGoalView.swift in Sources */,
 				041212642C984179001333F1 /* IncomeView.swift in Sources */,
 				041212722C98ABEA001333F1 /* GoalsView.swift in Sources */,
 				041212622C983D1E001333F1 /* AppCard.swift in Sources */,
@@ -339,6 +346,7 @@
 				041212682C9846F6001333F1 /* AddTransactionView.swift in Sources */,
 				047E40BC2C99DA2600659068 /* AppCardGoals.swift in Sources */,
 				041212602C983247001333F1 /* AppButton.swift in Sources */,
+				043328412C9C274F0086D79B /* Example.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

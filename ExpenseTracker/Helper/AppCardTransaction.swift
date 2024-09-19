@@ -4,11 +4,11 @@
 //
 //  Created by MacBook Air on 16/09/24.
 //
-
+import SwiftData
 import SwiftUI
 
 struct CardTransaction: View {
-    var transaction: TransactionModel
+    var transaction: TransactionModel = TransactionModel()
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -18,8 +18,8 @@ struct CardTransaction: View {
                     .font(.subheadline)
             }
             Spacer()
-            Text(transaction.amount)
-                .foregroundColor(transaction.status == .expense ? .red : .green) // Warna tergantung status
+            Text(String(transaction.amount))
+                .foregroundColor(transaction.status == false ? .red : .green) // Warna tergantung status
         }
         .padding()
         .frame(maxWidth: .infinity)
@@ -30,5 +30,5 @@ struct CardTransaction: View {
 }
 
 #Preview {
-    CardTransaction(transaction: TransactionModel(title: "gatau beli apa", date: "05/09/2024", amount: "+IDR 2.000.000", status: .expense))
+    CardTransaction(transaction: TransactionModel())
 }

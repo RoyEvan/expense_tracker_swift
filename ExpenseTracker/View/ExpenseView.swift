@@ -5,6 +5,7 @@
 //  Created by MacBook Air on 16/09/24.
 //
 
+import SwiftData
 import SwiftUI
 import Charts
 
@@ -12,14 +13,14 @@ struct ExpenseView: View {
     @State private var selectedCount: Int?
     @State private var selectedSector: String?
     
-    
-    
-    let expenses = [
-            TransactionModel(title: "Groceries", date: "10/09/2024", amount: "-IDR 200.000", status: .expense),
-            TransactionModel(title: "Transport", date: "11/09/2024", amount: "-IDR 50.000", status: .expense),
-            TransactionModel(title: "Transport", date: "11/09/2024", amount: "-IDR 50.000", status: .expense),
-            TransactionModel(title: "Transport", date: "11/09/2024", amount: "-IDR 50.000", status: .expense)
-        ]
+    @Environment(\.modelContext) var modelContext
+    @Query var transactions: [TransactionModel]
+//    let expenses = [
+//            TransactionModel(title: "Groceries", date: "10/09/2024", amount: "-IDR 200.000", status: .expense),
+//            TransactionModel(title: "Transport", date: "11/09/2024", amount: "-IDR 50.000", status: .expense),
+//            TransactionModel(title: "Transport", date: "11/09/2024", amount: "-IDR 50.000", status: .expense),
+//            TransactionModel(title: "Transport", date: "11/09/2024", amount: "-IDR 50.000", status: .expense)
+//        ]
     
     private var categoryExpense = [
             (name: "Boarding Host", count: 120, color: Color("chartColor1")),
@@ -97,12 +98,14 @@ struct ExpenseView: View {
                 .font(.headline)
                 .padding(.top, 20)
             
-            List(expenses) { transaction in
-                CardTransaction(transaction: transaction)
-                    .listRowBackground(Color.clear)
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
-                    .padding(.bottom,10)
+            List(transactions) { t in
+                if (!t.status) {
+                    CardTransaction(transaction: t)
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
+                        .padding(.bottom,10)
+                }
             }.listStyle(PlainListStyle())
                 .background(Color.clear)
             
@@ -115,5 +118,5 @@ struct ExpenseView: View {
 }
 
 #Preview {
-    ExpenseView()
+    ExpenseView().modelContainer(for: TransactionModel.self)
 }

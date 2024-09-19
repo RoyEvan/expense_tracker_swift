@@ -4,31 +4,22 @@
 //
 //  Created by MacBook Air on 16/09/24.
 //
-
+import SwiftData
 import SwiftUI
 
 struct HomeView: View {
     @State private var showingAddTransaction = false
     @State private var selectedSegment = 0
     
-    let expenses = [
-        TransactionModel(title: "Groceries", date: "10/09/2024", amount: "-IDR 200.000", status: .expense),
-        TransactionModel(title: "Transport", date: "11/09/2024", amount: "-IDR 50.000", status: .expense),
-        TransactionModel(title: "Transport", date: "11/09/2024", amount: "-IDR 50.000", status: .expense),
-        TransactionModel(title: "Transport", date: "11/09/2024", amount: "-IDR 50.000", status: .expense)
-    ]
-    
-    let income = [
-        TransactionModel(title: "Salary", date: "01/09/2024", amount: "+IDR 5.000.000", status: .income),
-        TransactionModel(title: "Freelance", date: "05/09/2024", amount: "+IDR 2.000.000", status: .income),
-        TransactionModel(title: "Salary", date: "01/09/2024", amount: "+IDR 5.000.000", status: .income),
-        TransactionModel(title: "Freelance", date: "05/09/2024", amount: "+IDR 2.000.000", status: .income)
-    ]
+    @Environment(\.modelContext) var modelContext
+    @Query var transactions: [TransactionModel]
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 12){
-                AppButton(title: "+ Add First Income", textColor: .white, backgroundColor: "appColor").padding(.bottom, 8)
+                NavigationLink(destination: Example()) {
+                    AppButton(title: "Add First Income", textColor: .white, backgroundColor: "appColor").padding(.bottom, 8)
+                }
                 Text("Summary")
                     .frame(maxWidth: .infinity,alignment: .leading)
                     .font(.headline)
@@ -41,10 +32,11 @@ struct HomeView: View {
                 }
                 HStack{
                     AppCard(iconTitle: "👝", subTitle: "Saving 20%", money: "0")
-//                    NavigationLink(destination: GoalsView()){
-//                        AppCard(iconTitle: "📌", subTitle: "Goals 30%", money: "0")
-//                    }
-                    AppCard(iconTitle: "📌", subTitle: "Goals 30%", money: "0")
+
+                    NavigationLink(destination: GoalsView().modelContainer(for: GoalModel.self)){
+                        AppCard(iconTitle: "📌", subTitle: "Goals 30%", money: "0")
+                    }
+                    
                     
                 }.padding(.bottom, 15)
                 
@@ -54,6 +46,7 @@ struct HomeView: View {
                         .font(.headline)
                     Button(action: {
                         showingAddTransaction.toggle()
+                        addTransaction()
                     }) {
                         Text("Add Transaction")
                             .frame(maxWidth: .infinity, alignment: .trailing)
@@ -69,24 +62,30 @@ struct HomeView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 8)
                     if selectedSegment == 0 {
-                        List(expenses) { transaction in
-                            CardTransaction(transaction: transaction)
-                                .listRowBackground(Color.clear)
-                                .listRowInsets(EdgeInsets())
-                                .listRowSeparator(.hidden)
-                                .padding(.bottom,10)
-                        }.listStyle(PlainListStyle())
-                            .background(Color.clear)
-                        
-                    } else if selectedSegment == 1 {
-                        List(income) { transaction in
-                            CardTransaction(transaction: transaction)
-                                .listRowBackground(Color.clear)
-                                .listRowInsets(EdgeInsets())
-                                .listRowSeparator(.hidden)
-                                .padding(.bottom,10)
-                        }.listStyle(PlainListStyle())
-                            .background(Color.clear)
+                        List(transactions) { t in
+                            if(!t.status) {
+                                CardTransaction(transaction: t)
+                                    .listRowBackground(Color.clear)
+                                    .listRowInsets(EdgeInsets())
+                                    .listRowSeparator(.hidden)
+                                    .padding(.bottom,10)
+                            }
+                        }
+                        .listStyle(PlainListStyle())
+                        .background(Color.clear)
+                    }
+                    else if selectedSegment == 1 {
+                        List(transactions) { t in
+                            if(t.status) {
+                                CardTransaction(transaction: t)
+                                    .listRowBackground(Color.clear)
+                                    .listRowInsets(EdgeInsets())
+                                    .listRowSeparator(.hidden)
+                                    .padding(.bottom,10)
+                            }
+                        }
+                        .listStyle(PlainListStyle())
+                        .background(Color.clear)
                     }
                 }
             }.padding()
@@ -95,9 +94,28 @@ struct HomeView: View {
                 }
         }.edgesIgnoringSafeArea(.bottom)
     }
+    
+    func addTransaction() {
+        modelContext.insert(TransactionModel(title: "Salary", date: "01/09/2024", amount: 5000000, status: true))
+        
+        modelContext.insert(TransactionModel(title: "Freelance", date: "05/09/2024", amount: 2000000, status: true))
+        
+        modelContext.insert(TransactionModel(title: "Salary", date: "01/09/2024", amount: 5000000, status: true))
+        
+        modelContext.insert(TransactionModel(title: "Freelance", date: "05/09/2024", amount: 2000000, status: true))
+        
+        modelContext.insert(TransactionModel(title: "Groceries", date: "10/09/2024", amount: -200000, status: false))
+        
+        modelContext.insert(TransactionModel(title: "Transport", date: "11/09/2024", amount: -50000, status: false))
+        
+        modelContext.insert(TransactionModel(title: "Transport", date: "11/09/2024", amount: -50000, status: false))
+        
+        modelContext.insert(TransactionModel(title: "Transport", date: "11/09/2024", amount: -50000, status: false))
+        
+    }
 }
 
 #Preview {
-    HomeView()
+    HomeView().modelContainer(for: TransactionModel.self)
 }
 

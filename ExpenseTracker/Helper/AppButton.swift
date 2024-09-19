@@ -16,7 +16,6 @@ struct AppButton: View {
         HStack {
             Image(systemName: systemName)
             Text(title)
-                
         }
         .font(.system(size: 20, weight: .bold, design: .default))
         .frame(maxWidth: .infinity)
