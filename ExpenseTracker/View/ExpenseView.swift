@@ -12,6 +12,8 @@ struct ExpenseView: View {
     @State private var selectedCount: Int?
     @State private var selectedSector: String?
     
+    
+    
     let expenses = [
             TransactionModel(title: "Groceries", date: "10/09/2024", amount: "-IDR 200.000", status: .expense),
             TransactionModel(title: "Transport", date: "11/09/2024", amount: "-IDR 50.000", status: .expense),
