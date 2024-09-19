@@ -1,24 +1,23 @@
-//
-//  ContentView.swift
-//  expense_tracker_swift
-//
-//  Created by MacBook Air on 17/09/24.
-//
-
 import SwiftUI
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+@main
+struct expense_tracker_swiftApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
         }
-        .padding()
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView: View {
+    @State private var showingTransactionModal = false
+
+    var body: some View {
+        Button("Add New Transaction") {
+            showingTransactionModal = true
+        }
+        .sheet(isPresented: $showingTransactionModal) {
+            NewTransactionView(isPresented: $showingTransactionModal)
+        }
+    }
 }
