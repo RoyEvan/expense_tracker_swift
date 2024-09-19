@@ -8,11 +8,70 @@
 import SwiftUI
 
 struct AddTransactionView: View {
+    @Binding var isPresented: Bool
+    @State private var transactionType = "Income"
+    @State private var amount: String = ""
+    @State private var category: String = ""
+    @State private var transactionDate = Date()
+    @State private var isMonthly = false
+
+    private func categoryOptions() -> [String] {
+        switch transactionType {
+        case "Income":
+            return ["Salary", "Pocket Money"]
+        case "Expenses":
+            return ["Living", "Food & Beverage", "Education", "Fashion"]
+        default:
+            return []
+        }
+    }
+
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            Form {
+                Picker("Type", selection: $transactionType) {
+                    Text("Income").tag("Income")
+                    Text("Expenses").tag("Expenses")
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .onChange(of: transactionType) { _ in
+                    category = ""
+                }
+
+                HStack {
+                    Text("Rp")
+                        .foregroundColor(.black)
+                    TextField("Amount", text: $amount)
+                        .keyboardType(.numberPad)
+                }
+
+
+                Picker("Category", selection: $category) {
+                    ForEach(categoryOptions(), id: \.self) { option in
+                        Text(option).tag(option)
+                    }
+                }
+
+                DatePicker("Date", selection: $transactionDate, displayedComponents: .date)
+
+                Toggle(isOn: $isMonthly) {
+                    Text("Monthly")
+                }
+            }
+            .navigationBarTitle("New Transaction", displayMode: .inline)
+            .navigationBarItems(
+                leading: Button("Cancel") {
+                    self.isPresented = false
+                }.foregroundColor(.red),
+                trailing: Button("Add") {
+                    self.isPresented = false
+                }.foregroundColor(.blue)
+            )
+        }
     }
 }
 
 #Preview {
-    AddTransactionView()
+    AddTransactionView(isPresented: .constant(true))
 }

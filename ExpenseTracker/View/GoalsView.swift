@@ -7,26 +7,26 @@
 
 import SwiftUI
 
-struct GoalsView: View {
-    var goals: [GoalModel] = [GoalModel()]
-    var body: some View {
-        NavigationStack {
-            VStack{
-                VStack {
-                    AppCardGoals().padding()
-                }
-                
-                Spacer()
-                
-                AppButton(title: "Add Your Goals").padding()
-            }
-            
-            .navigationTitle("Goals")
-            .navigationBarTitleDisplayMode(.inline)
-        }
-    }
-}
-
-#Preview {
-    GoalsView()
-}
+//struct GoalsView: View {
+//    var goals: [GoalModel] = [GoalModel()]
+//    var body: some View {
+//        NavigationStack {
+//            VStack{
+//                VStack {
+//                    AppCardGoals().padding()
+//                }
+//                
+//                Spacer()
+//                
+//                AppButton(title: "Add Your Goals").padding()
+//            }
+//            
+//            .navigationTitle("Goals")
+//            .navigationBarTitleDisplayMode(.inline)
+//        }
+//    }
+//}
+//
+//#Preview {
+//    GoalsView()
+//}

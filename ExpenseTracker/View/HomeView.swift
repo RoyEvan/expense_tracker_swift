@@ -41,10 +41,10 @@ struct HomeView: View {
                 }
                 HStack{
                     AppCard(iconTitle: "👝", subTitle: "Saving 20%", money: "0")
-                    NavigationLink(destination: GoalsView()){
-                        AppCard(iconTitle: "📌", subTitle: "Goals 30%", money: "0")
-                    }
-                    
+//                    NavigationLink(destination: GoalsView()){
+//                        AppCard(iconTitle: "📌", subTitle: "Goals 30%", money: "0")
+//                    }
+                    AppCard(iconTitle: "📌", subTitle: "Goals 30%", money: "0")
                     
                 }.padding(.bottom, 15)
                 
@@ -91,7 +91,7 @@ struct HomeView: View {
                 }
             }.padding()
                 .sheet(isPresented: $showingAddTransaction) {
-                    AddTransactionView()
+                    AddTransactionView(isPresented: $showingAddTransaction)
                 }
         }.edgesIgnoringSafeArea(.bottom)
     }
