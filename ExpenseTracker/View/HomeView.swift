@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var showingAddTransaction = false
+    @State private var showingAddGoal = false
     @State private var selectedSegment = 0
     
     @Environment(\.modelContext) var modelContext
@@ -37,7 +38,7 @@ struct HomeView: View {
                         AppCard(iconTitle: "📌", subTitle: "Goals 30%", money: "0")
                     }
                     
-                    
+    
                 }.padding(.bottom, 15)
                 
                 HStack{
@@ -46,7 +47,7 @@ struct HomeView: View {
                         .font(.headline)
                     Button(action: {
                         showingAddTransaction.toggle()
-                        addTransaction()
+//                        addTransaction()
                     }) {
                         Text("Add Transaction")
                             .frame(maxWidth: .infinity, alignment: .trailing)
@@ -91,6 +92,9 @@ struct HomeView: View {
             }.padding()
                 .sheet(isPresented: $showingAddTransaction) {
                     AddTransactionView(isPresented: $showingAddTransaction)
+                }
+                .sheet(isPresented: $showingAddGoal) {
+                    
                 }
         }.edgesIgnoringSafeArea(.bottom)
     }

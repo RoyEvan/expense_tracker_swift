@@ -15,14 +15,14 @@ enum TransactionStatus {
 
 @Model
 class TransactionModel {
-    var id: UUID
+//    var id: UUID
     var title: String
     var date: String
     var amount: Int
     var status: Bool
     
-    init(id: UUID = UUID(), title: String = "Sample Transaction", date: String = "1970/01/01", amount: Int = 1000, status: Bool = false) {
-        self.id = id
+    init(title: String = "Sample Transaction", date: String = "1970/01/01", amount: Int = 1000, status: Bool = false) {
+//        self.id = UUID()
         self.title = title
         self.date = date
         self.amount = amount

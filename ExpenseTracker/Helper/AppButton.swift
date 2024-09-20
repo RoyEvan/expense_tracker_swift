@@ -25,7 +25,6 @@ struct AppButton: View {
             Color(backgroundColor)
         )
         .cornerRadius(10)
-        
     }
 }
 

@@ -9,7 +9,10 @@ import SwiftData
 import SwiftUI
 
 struct GoalsView: View {
+    @Environment(\.modelContext) var modelContext
     @Query var goals: [GoalModel]
+    
+    
     var body: some View {
         NavigationStack {
             VStack{
@@ -22,9 +25,6 @@ struct GoalsView: View {
                 NavigationLink(destination: Example()) {
                     AppButton(title: "Add Your Goals").padding()
                 }
-                
-                
-                
             }
             
             .navigationTitle("Goals")

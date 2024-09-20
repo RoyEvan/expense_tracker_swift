@@ -8,18 +8,44 @@
 import SwiftUI
 
 struct AddGoalView: View {
+    @Binding var isPresented: Bool
+    
+    @State var title: String = ""
+    @State var amount: String = ""
+    @State var priority: String = ""
+    
+    
     var body: some View {
-        NavigationStack {
-            VStack(alignment: .leading) {
-                Text("Title")
-                TextField()
+        NavigationView {
+            Form {
+                VStack {
+                    HStack {
+                        Text("Title")
+                            .foregroundColor(.black)
+                        TextField("Title", text: $title)
+                            
+                    }
+                    
+                    HStack {
+                        Text("Rp")
+                            .foregroundColor(.black)
+                        TextField("Amount", text: $amount)
+                            .keyboardType(.numberPad)
+                    }
+
+                    HStack {
+                        Text("Priority")
+                            .foregroundColor(.black)
+                        TextField("Priority", text: $priority)
+                            .keyboardType(.numberPad)
+                    }
+                }
             }
-            .navigationTitle("Add Goal")
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitle("New Goal", displayMode: .inline)
         }
     }
 }
 
 #Preview {
-    AddGoalView()
+    AddGoalView(isPresented: .constant(true))
 }

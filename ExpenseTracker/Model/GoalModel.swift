@@ -10,7 +10,7 @@ import Foundation
 import SwiftData
 
 @Model
-class GoalModel: Identifiable {
+class GoalModel {
     var id: UUID
     var priority: Int
     var title: String
@@ -20,8 +20,8 @@ class GoalModel: Identifiable {
     var status: Bool
     
     
-    init(id: UUID = UUID(), priority: Int = 1, title: String = "Sample Goal", date: Date = Date(), amount: Int = 1000, saved: Int = 500, status: Bool = true) {
-        self.id = id
+    init(priority: Int = 1, title: String = "Sample Goal", date: Date = Date(), amount: Int = 1000, saved: Int = 500, status: Bool = true){
+        self.id = UUID()
         self.priority = priority
         self.title = title
         self.date = date
