@@ -18,30 +18,36 @@ struct AddGoalView: View {
     var body: some View {
         NavigationView {
             Form {
-                VStack {
-                    HStack {
-                        Text("Title")
-                            .foregroundColor(.black)
-                        TextField("Title", text: $title)
-                            
-                    }
-                    
-                    HStack {
-                        Text("Rp")
-                            .foregroundColor(.black)
-                        TextField("Amount", text: $amount)
-                            .keyboardType(.numberPad)
-                    }
+                HStack {
+                    Text("Title\t")
+                        .foregroundColor(.black)
+                    TextField("Title", text: $title)
+                        
+                }
+                
+                HStack {
+                    Text("Rp\t\t")
+                        .foregroundColor(.black)
+                    TextField("Amount", text: $amount)
+                        .keyboardType(.numberPad)
+                }
 
-                    HStack {
-                        Text("Priority")
-                            .foregroundColor(.black)
-                        TextField("Priority", text: $priority)
-                            .keyboardType(.numberPad)
-                    }
+                HStack {
+                    Text("Priority\t")
+                        .foregroundColor(.black)
+                    TextField("Priority", text: $priority)
+                        .keyboardType(.numberPad)
                 }
             }
             .navigationBarTitle("New Goal", displayMode: .inline)
+            .navigationBarItems(
+                leading: Button("Cancel") {
+                    self.isPresented = false
+                }.foregroundColor(.red),
+                trailing: Button("Add") {
+                    self.isPresented = false
+                }.foregroundColor(.blue)
+            )
         }
     }
 }

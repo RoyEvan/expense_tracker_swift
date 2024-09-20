@@ -9,23 +9,32 @@ import Foundation
 import SwiftData
 
 enum TransactionStatus {
-    case income
-    case expense
+    case income  // true
+    case expense // false
 }
 
 @Model
 class TransactionModel {
+    var category: String
 //    var id: UUID
-    var title: String
-    var date: String
+    var date: Date
     var amount: Int
     var status: Bool
+    var monthly: Bool
     
-    init(title: String = "Sample Transaction", date: String = "1970/01/01", amount: Int = 1000, status: Bool = false) {
+    init(category: String = "Salary", date: Date = Date(), amount: Int = 1000, status: Bool = false, monthly: Bool = false) {
 //        self.id = UUID()
-        self.title = title
+        
+        if category.count == 0 {
+            self.category = "Salary"
+        }
+        else {
+            self.category = category
+        }
+        
         self.date = date
         self.amount = amount
         self.status = status
+        self.monthly = monthly
     }
 }

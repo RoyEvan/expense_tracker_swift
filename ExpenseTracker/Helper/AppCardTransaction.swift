@@ -12,9 +12,10 @@ struct CardTransaction: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(transaction.title)
+                Text(transaction.category)
                     .font(.headline)
-                Text(transaction.date)
+                
+                Text(formattedDate(date: transaction.date))
                     .font(.subheadline)
             }
             Spacer()
@@ -26,6 +27,12 @@ struct CardTransaction: View {
         .frame(height: 84)
         .background(Color("cardColor"))
         .cornerRadius(12)
+    }
+    
+    func formattedDate(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        return formatter.string(from: date)
     }
 }
 
