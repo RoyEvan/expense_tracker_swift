@@ -17,9 +17,21 @@ struct GoalsView: View {
     var body: some View {
         NavigationStack {
             VStack{
-                ForEach(goals) { g in VStack {
-                    AppCardGoals(goal: g).padding()
-                }}
+                if(goals.count <= 0) {
+                    VStack {
+                        Spacer()
+                        
+                        Text("You have no goals").foregroundColor(.secondary)
+                        
+                        Spacer()
+                    }
+                }
+                else {
+                    ForEach(goals) { g in VStack {
+                        AppCardGoals(goal: g).padding()
+                    }}
+                }
+               
                 
                 Spacer()
                 

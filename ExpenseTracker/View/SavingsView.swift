@@ -105,16 +105,16 @@ struct SavingsView: View {
                 .listStyle(PlainListStyle())
             }
             .navigationTitle("Savings")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        // Add a new saving entry (Example action)
-                        addSaving(title: "Income",amount: 50.0, date: Date())
-                    }) {
-                        Image(systemName: "plus")
-                    }
-                }
-            }
+//            .toolbar {
+//                ToolbarItem(placement: .navigationBarTrailing) {
+//                    Button(action: {
+//                        // Add a new saving entry (Example action)
+//                        addSaving(title: "Income",amount: 50.0, date: Date())
+//                    }) {
+//                        Image(systemName: "plus")
+//                    }
+//                }
+//            }
             
             
             

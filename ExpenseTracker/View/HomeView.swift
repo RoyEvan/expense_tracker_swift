@@ -17,9 +17,6 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 12){
-                NavigationLink(destination: Example()) {
-                    AppButton(title: "Add First Income", textColor: .white, backgroundColor: "appColor").padding(.bottom, 8)
-                }
                 Text("Summary")
                     .frame(maxWidth: .infinity,alignment: .leading)
                     .font(.headline)
@@ -31,8 +28,7 @@ struct HomeView: View {
                     }
                 }
                 HStack{
-                    NavigationLink(destination: SavingsView().modelContainer(for: Saving.self))
-                    {
+                    NavigationLink(destination: SavingsView().modelContainer(for: Saving.self)) {
                         AppCard(iconTitle: "👝", subTitle: "Saving 20%", money: "0")
                     }
                     
@@ -50,57 +46,75 @@ struct HomeView: View {
                     Text("Recent Transaction")
                         .frame(maxWidth: .infinity,alignment: .leading)
                         .font(.headline)
-                    Button(action: {
-                        showingAddTransaction.toggle()
-//                        addTransaction()
-                    }) {
-                        Text("Add Transaction")
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            .font(.headline)
-                            .fontWeight(.regular)
+                    
+                    if(transactions.count > 0) {
+                        Button(action: {
+                            showingAddTransaction.toggle()
+                        }) {
+                            Text("Add Transaction")
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                .font(.headline)
+                                .fontWeight(.regular)
+                        }
                     }
                 }
                 VStack {
-                    Picker("Select Option", selection: $selectedSegment) {
-                        Text("Expenses").tag(0)
-                        Text("Income").tag(1)
-                    }.pickerStyle(SegmentedPickerStyle())
+                    if(transactions.count <= 0) {
+                        VStack {
+                            Spacer()
+                            Text("You have no transactions").foregroundColor(.secondary)
+                            Spacer()
+                        }
+                        
+                        Spacer()
+                        
+                        NavigationLink(destination: Example()) {
+                            AppButton(title: "Add First Income", textColor: .white, backgroundColor: "appColor").padding(.bottom, 8)
+                        }
+                    }
+                    else {
+                        Picker("Select Option", selection: $selectedSegment) {
+                            Text("Expenses").tag(0)
+                            Text("Income").tag(1)
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 8)
-                    if selectedSegment == 0 {
-                        List(transactions) { t in
-                            if(!t.status) {
-                                CardTransaction(transaction: t)
-                                    .listRowBackground(Color.clear)
-                                    .listRowInsets(EdgeInsets())
-                                    .listRowSeparator(.hidden)
-                                    .padding(.bottom,10)
+                        
+                        if selectedSegment == 0 {
+                            List(transactions) { t in
+                                if(!t.status) {
+                                    CardTransaction(transaction: t)
+                                        .listRowBackground(Color.clear)
+                                        .listRowInsets(EdgeInsets())
+                                        .listRowSeparator(.hidden)
+                                        .padding(.bottom,10)
+                                }
                             }
+                            .listStyle(PlainListStyle())
+                            .background(Color.clear)
                         }
-                        .listStyle(PlainListStyle())
-                        .background(Color.clear)
-                    }
-                    else if selectedSegment == 1 {
-                        List(transactions) { t in
-                            if(t.status) {
-                                CardTransaction(transaction: t)
-                                    .listRowBackground(Color.clear)
-                                    .listRowInsets(EdgeInsets())
-                                    .listRowSeparator(.hidden)
-                                    .padding(.bottom,10)
+                        else if selectedSegment == 1 {
+                            List(transactions) { t in
+                                if(t.status) {
+                                    CardTransaction(transaction: t)
+                                        .listRowBackground(Color.clear)
+                                        .listRowInsets(EdgeInsets())
+                                        .listRowSeparator(.hidden)
+                                        .padding(.bottom,10)
+                                }
                             }
+                            .listStyle(PlainListStyle())
+                            .background(Color.clear)
                         }
-                        .listStyle(PlainListStyle())
-                        .background(Color.clear)
                     }
                 }
-            }.padding()
-                .sheet(isPresented: $showingAddTransaction) {
-                    AddTransactionView(isPresented: $showingAddTransaction)
-                }
-                .sheet(isPresented: $showingAddGoal) {
-                    
-                }
+            }
+            .padding()
+            .sheet(isPresented: $showingAddTransaction) {
+                AddTransactionView(isPresented: $showingAddTransaction)
+            }
+            .navigationTitle("Dashboard")
         }.edgesIgnoringSafeArea(.bottom)
     }
     
