@@ -28,6 +28,8 @@
 		043328432C9C39ED0086D79B /* AddGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043328422C9C39ED0086D79B /* AddGoalView.swift */; };
 		046C56422C9A740300759965 /* GoalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046C56412C9A740300759965 /* GoalModel.swift */; };
 		047E40BC2C99DA2600659068 /* AppCardGoals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047E40BB2C99DA2600659068 /* AppCardGoals.swift */; };
+		04F73F2A2C9D27E00028AA83 /* SavingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F73F292C9D27E00028AA83 /* SavingsModel.swift */; };
+		04F73F2C2C9D28890028AA83 /* SavingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F73F2B2C9D28890028AA83 /* SavingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +74,8 @@
 		043328422C9C39ED0086D79B /* AddGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGoalView.swift; sourceTree = "<group>"; };
 		046C56412C9A740300759965 /* GoalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalModel.swift; sourceTree = "<group>"; };
 		047E40BB2C99DA2600659068 /* AppCardGoals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCardGoals.swift; sourceTree = "<group>"; };
+		04F73F292C9D27E00028AA83 /* SavingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingsModel.swift; sourceTree = "<group>"; };
+		04F73F2B2C9D28890028AA83 /* SavingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +174,7 @@
 				0412126E2C987489001333F1 /* SplashScreenView.swift */,
 				041212712C98ABE9001333F1 /* GoalsView.swift */,
 				043328422C9C39ED0086D79B /* AddGoalView.swift */,
+				04F73F2B2C9D28890028AA83 /* SavingsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -179,6 +184,7 @@
 			children = (
 				041212692C98554C001333F1 /* TransactionModel.swift */,
 				046C56412C9A740300759965 /* GoalModel.swift */,
+				04F73F292C9D27E00028AA83 /* SavingsModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -340,6 +346,8 @@
 				041212622C983D1E001333F1 /* AppCard.swift in Sources */,
 				0412126F2C987489001333F1 /* SplashScreenView.swift in Sources */,
 				041212662C984192001333F1 /* ExpenseView.swift in Sources */,
+				04F73F2A2C9D27E00028AA83 /* SavingsModel.swift in Sources */,
+				04F73F2C2C9D28890028AA83 /* SavingsView.swift in Sources */,
 				041212322C983076001333F1 /* ContentView.swift in Sources */,
 				0412126C2C9855A8001333F1 /* AppCardTransaction.swift in Sources */,
 				041212302C983076001333F1 /* ExpenseTrackerApp.swift in Sources */,

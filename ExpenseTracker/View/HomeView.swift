@@ -1,4 +1,3 @@
-//
 //  HomeView.swift
 //  ExpenseTracker
 //
@@ -9,6 +8,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var showingAddTransaction = false
+    @State private var showingAddGoal = false
     @State private var selectedSegment = 0
     
     @Environment(\.modelContext) var modelContext
@@ -31,9 +31,15 @@ struct HomeView: View {
                     }
                 }
                 HStack{
-                    AppCard(iconTitle: "👝", subTitle: "Saving 20%", money: "0")
+                    NavigationLink(destination: SavingsView().modelContainer(for: Saving.self))
+                    {
+                        AppCard(iconTitle: "👝", subTitle: "Saving 20%", money: "0")
+                    }
+                    
+                   
 
-                    NavigationLink(destination: GoalsView().modelContainer(for: GoalModel.self)){
+                    NavigationLink(destination: GoalsView().modelContainer(for: GoalModel.self))
+                    {
                         AppCard(iconTitle: "📌", subTitle: "Goals 30%", money: "0")
                     }
                     
@@ -46,6 +52,7 @@ struct HomeView: View {
                         .font(.headline)
                     Button(action: {
                         showingAddTransaction.toggle()
+//                        addTransaction()
                     }) {
                         Text("Add Transaction")
                             .frame(maxWidth: .infinity, alignment: .trailing)
@@ -91,37 +98,15 @@ struct HomeView: View {
                 .sheet(isPresented: $showingAddTransaction) {
                     AddTransactionView(isPresented: $showingAddTransaction)
                 }
-                
+                .sheet(isPresented: $showingAddGoal) {
+                    
+                }
         }.edgesIgnoringSafeArea(.bottom)
     }
     
-    func convertStringToDate(dateString: String) -> Date! {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyyy"
-        return formatter.date(from: dateString)
-    }
-    
-    func addTransaction() {
-        modelContext.insert(TransactionModel(category: "Salary", date: convertStringToDate(dateString: "01/09/2024"), amount: 5000000, status: true))
-        
-        modelContext.insert(TransactionModel(category: "Freelance", date: convertStringToDate(dateString: "05/09/2024"), amount: 2000000, status: true))
-        
-        modelContext.insert(TransactionModel(category: "Salary", date: convertStringToDate(dateString: "01/09/2024"), amount: 5000000, status: true))
-        
-        modelContext.insert(TransactionModel(category: "Freelance", date: convertStringToDate(dateString: "05/09/2024"), amount: 2000000, status: true))
-        
-        modelContext.insert(TransactionModel(category: "Groceries", date: convertStringToDate(dateString: "10/09/2024"), amount: -200000, status: false))
-        
-        modelContext.insert(TransactionModel(category: "Transport", date: convertStringToDate(dateString: "11/09/2024"), amount: -50000, status: false))
-        
-        modelContext.insert(TransactionModel(category: "Transport", date: convertStringToDate(dateString: "11/09/2024"), amount: -50000, status: false))
-        
-        modelContext.insert(TransactionModel(category: "Transport", date: convertStringToDate(dateString: "11/09/2024"), amount: -50000, status: false))
-        
-    }
+  
 }
 
 #Preview {
     HomeView().modelContainer(for: TransactionModel.self)
 }
-
