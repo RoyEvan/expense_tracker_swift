@@ -23,11 +23,11 @@ struct ExpenseView: View {
 //        ]
     
     private var categoryExpense = [
-            (name: "Boarding Host", count: 120, color: Color("chartColor1")),
-            (name: "Fuel", count: 234, color: Color("chartColor2")),
-            (name: "Playing", count: 62, color: Color("chartColor3")),
-            (name: "Food&Drink", count: 625, color: Color("chartColor4")),
-            (name: "Other", count: 320, color: Color("chartColor5")),
+        (name: "Boarding Host", count: 120, color: Color("chartColor1")),
+        (name: "Fuel", count: 234, color: Color("chartColor2")),
+        (name: "Playing", count: 62, color: Color("chartColor3")),
+        (name: "Food&Drink", count: 625, color: Color("chartColor4")),
+        (name: "Other", count: 320, color: Color("chartColor5")),
     ]
     
     

@@ -15,7 +15,7 @@ struct SplashScreenView: View {
             Color("appColor")
                 .ignoresSafeArea()
             if self.isActive{
-                HomeView().modelContainer(for: TransactionModel.self)
+                HomeView().modelContainer(for: [TransactionModel.self, BalanceModel.self])
             }else{
                 Text("Monthy")
                     .foregroundStyle(.white)

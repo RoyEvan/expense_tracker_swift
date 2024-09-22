@@ -19,7 +19,7 @@ struct CardTransaction: View {
                     .font(.subheadline)
             }
             Spacer()
-            Text(String(transaction.amount))
+            Text(String(transaction.status == true ? transaction.amount : -1 * transaction.amount))
                 .foregroundColor(transaction.status == false ? .red : .green) // Warna tergantung status
         }
         .padding()

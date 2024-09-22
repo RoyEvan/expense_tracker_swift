@@ -16,16 +16,13 @@ enum TransactionStatus {
 @Model
 class TransactionModel {
     var category: String
-//    var id: UUID
     var date: Date
-    var amount: Int
+    var amount: Int64
     var status: Bool
     var monthly: Bool
     
-    init(category: String = "Salary", date: Date = Date(), amount: Int = 1000, status: Bool = false, monthly: Bool = false) {
-//        self.id = UUID()
-        
-        if category.count == 0 {
+    init(category: String = "Salary", date: Date = Date(), amount: Int64 = 1000, status: Bool = false, monthly: Bool = false) {
+        if category.count <= 0 {
             self.category = "Salary"
         }
         else {

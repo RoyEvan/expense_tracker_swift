@@ -9,7 +9,9 @@ import SwiftUI
 
 
 struct AppCardGoals: View {
-    var goal: GoalModel
+    var goal: GoalModel = GoalModel()
+    
+    @Query(sort: \BalanceModel.date_logged, order: .reverse) var balances: [BalanceModel]
     
     var body: some View {
         VStack {
@@ -22,7 +24,7 @@ struct AppCardGoals: View {
                 Text(goal.title).font(.headline)
                 
                 Spacer()
-                let percentFinish: Int = Int((Float(goal.saved)/Float(goal.amount))*100.0)
+                let percentFinish: Int = Int((Float(balances.first!.goals)/Float(goal.amount))*100.0)
                 Text("\(percentFinish)%")
                     .bold()
                     .foregroundColor(Color("appColor"))
@@ -31,7 +33,7 @@ struct AppCardGoals: View {
             ProgressView(value: 0.5)
             
             HStack {
-                Text("\(goal.saved)")
+                Text("\(balances.first!.goals)")
                     .fontWeight(.medium)
                     .font(.system(size: 12))
                 
@@ -53,5 +55,5 @@ struct AppCardGoals: View {
 }
 
 #Preview {
-    AppCardGoals(goal: GoalModel())
+    AppCardGoals(goal: GoalModel()).modelContainer(for: BalanceModel.self)
 }

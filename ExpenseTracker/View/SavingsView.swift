@@ -103,6 +103,7 @@ struct SavingsView: View {
 //                    }
                 }
                 .listStyle(PlainListStyle())
+                
             }
             .navigationTitle("Savings")
 //            .toolbar {
@@ -115,7 +116,7 @@ struct SavingsView: View {
 //                    }
 //                }
 //            }
-            
+            Spacer()
             
             
         }
@@ -143,9 +144,9 @@ private let dateFormatter: DateFormatter = {
 //    }
 //}
 
-var totalSavings: Double = 0.0
+var totalSavings: Int64 = 0
 var history: [Saving] = []
-func addSaving(title: String,amount: Double, date: Date) {
+func addSaving(title: String, amount: Int64, date: Date) {
     let newSaving = Saving(title: title,date: date, amount: amount)
     history.append(newSaving)
 

@@ -7,9 +7,9 @@ class Saving {
 //    let id = UUID()
     let title: String
     let date: Date
-    let amount: Double
+    let amount: Int64
     
-    init(title: String, date: Date, amount: Double) {
+    init(title: String, date: Date, amount: Int64) {
         self.title = title
         self.date = date
         self.amount = amount

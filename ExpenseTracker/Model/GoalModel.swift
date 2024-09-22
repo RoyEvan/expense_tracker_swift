@@ -11,22 +11,23 @@ import SwiftData
 
 @Model
 class GoalModel {
-    var id: UUID
     var priority: Int
     var title: String
-    var date: Date
-    var amount: Int
-    var saved: Int
+    var amount: Int64
     var status: Bool
     
     
-    init(priority: Int = 1, title: String = "Sample Goal", date: Date = Date(), amount: Int = 1000, saved: Int = 500, status: Bool = true){
-        self.id = UUID()
+    init(priority: Int = 1, title: String = "Sample Goal", amount: Int64 = 1000, status: Bool = true){
+        if(title.count <= 0) {
+            self.title = "Sample Goal"
+        }
+        else {
+            self.title = title
+        }
+        
         self.priority = priority
         self.title = title
-        self.date = date
         self.amount = amount
-        self.saved = saved
         self.status = status
     }
 }

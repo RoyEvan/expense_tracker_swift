@@ -27,7 +27,9 @@
 		043328412C9C274F0086D79B /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043328402C9C274F0086D79B /* Example.swift */; };
 		043328432C9C39ED0086D79B /* AddGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043328422C9C39ED0086D79B /* AddGoalView.swift */; };
 		046C56422C9A740300759965 /* GoalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046C56412C9A740300759965 /* GoalModel.swift */; };
+		046D74812CA038F2003AEDA6 /* TestCustomListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D74802CA038F2003AEDA6 /* TestCustomListView.swift */; };
 		047E40BC2C99DA2600659068 /* AppCardGoals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047E40BB2C99DA2600659068 /* AppCardGoals.swift */; };
+		04CDC0252C9E876B00D76717 /* BalanceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CDC0242C9E876B00D76717 /* BalanceModel.swift */; };
 		04F73F2A2C9D27E00028AA83 /* SavingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F73F292C9D27E00028AA83 /* SavingsModel.swift */; };
 		04F73F2C2C9D28890028AA83 /* SavingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F73F2B2C9D28890028AA83 /* SavingsView.swift */; };
 /* End PBXBuildFile section */
@@ -73,7 +75,9 @@
 		043328402C9C274F0086D79B /* Example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example.swift; sourceTree = "<group>"; };
 		043328422C9C39ED0086D79B /* AddGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGoalView.swift; sourceTree = "<group>"; };
 		046C56412C9A740300759965 /* GoalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalModel.swift; sourceTree = "<group>"; };
+		046D74802CA038F2003AEDA6 /* TestCustomListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCustomListView.swift; sourceTree = "<group>"; };
 		047E40BB2C99DA2600659068 /* AppCardGoals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCardGoals.swift; sourceTree = "<group>"; };
+		04CDC0242C9E876B00D76717 /* BalanceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceModel.swift; sourceTree = "<group>"; };
 		04F73F292C9D27E00028AA83 /* SavingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingsModel.swift; sourceTree = "<group>"; };
 		04F73F2B2C9D28890028AA83 /* SavingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -134,6 +138,7 @@
 				041212312C983076001333F1 /* ContentView.swift */,
 				041212332C983076001333F1 /* Assets.xcassets */,
 				041212352C983076001333F1 /* Preview Content */,
+				046D74802CA038F2003AEDA6 /* TestCustomListView.swift */,
 			);
 			path = ExpenseTracker;
 			sourceTree = "<group>";
@@ -185,6 +190,7 @@
 				041212692C98554C001333F1 /* TransactionModel.swift */,
 				046C56412C9A740300759965 /* GoalModel.swift */,
 				04F73F292C9D27E00028AA83 /* SavingsModel.swift */,
+				04CDC0242C9E876B00D76717 /* BalanceModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -342,6 +348,7 @@
 				0412125D2C983108001333F1 /* HomeView.swift in Sources */,
 				043328432C9C39ED0086D79B /* AddGoalView.swift in Sources */,
 				041212642C984179001333F1 /* IncomeView.swift in Sources */,
+				046D74812CA038F2003AEDA6 /* TestCustomListView.swift in Sources */,
 				041212722C98ABEA001333F1 /* GoalsView.swift in Sources */,
 				041212622C983D1E001333F1 /* AppCard.swift in Sources */,
 				0412126F2C987489001333F1 /* SplashScreenView.swift in Sources */,
@@ -349,6 +356,7 @@
 				04F73F2A2C9D27E00028AA83 /* SavingsModel.swift in Sources */,
 				04F73F2C2C9D28890028AA83 /* SavingsView.swift in Sources */,
 				041212322C983076001333F1 /* ContentView.swift in Sources */,
+				04CDC0252C9E876B00D76717 /* BalanceModel.swift in Sources */,
 				0412126C2C9855A8001333F1 /* AppCardTransaction.swift in Sources */,
 				041212302C983076001333F1 /* ExpenseTrackerApp.swift in Sources */,
 				041212682C9846F6001333F1 /* AddTransactionView.swift in Sources */,

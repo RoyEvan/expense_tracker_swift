@@ -16,48 +16,49 @@ struct GoalsView: View {
     
     var body: some View {
         NavigationStack {
-            VStack{
+            VStack {
                 if(goals.count <= 0) {
                     VStack {
                         Spacer()
-                        
                         Text("You have no goals").foregroundColor(.secondary)
-                        
                         Spacer()
                     }
                 }
                 else {
                     ForEach(goals) { g in VStack {
-                        AppCardGoals(goal: g).padding()
+                        AppCardGoals(goal: g)
+                            .modelContainer(for: BalanceModel.self)
+                            .padding()
                     }}
                 }
                
                 
                 Spacer()
                 
-                NavigationLink(destination: AddGoalView(isPresented: $showingAddGoal)) {
-                    Button(action: {
-                        showingAddGoal.toggle()
-                    }) {
-                        HStack {
-                            Image(systemName: "plus").foregroundColor(.white).bold()
-                            Text("Add Your Goal")
-                                .foregroundColor(.white)
-                                .bold()
-                                .padding()
-                        }
-                        
-                    }
-                    .frame(maxWidth: .infinity)
-                    .background(Color("appColor"))
-                    .cornerRadius(10)
-                    .padding()
-                    
+                AppButton(title: "Add Your Goal") {
+                    showingAddGoal.toggle()
                 }
-                
+                    
+//                    Button(action: {
+//                        showingAddGoal.toggle()
+//                    }) {
+//                        HStack {
+//                            Image(systemName: "plus").foregroundColor(.white).bold()
+//                            Text("Add Your Goal")
+//                                .foregroundColor(.white)
+//                                .bold()
+//                                .padding()
+//                        }
+//                        
+//                    }
+//                    .frame(maxWidth: .infinity)
+//                    .background(Color("appColor"))
+//                    .cornerRadius(10)
+//                    .padding()
             }
+            .padding()
             .sheet(isPresented: $showingAddGoal) {
-                AddGoalView(isPresented: $showingAddGoal)
+                AddGoalView(isPresented: $showingAddGoal).modelContainer(for: GoalModel.self)
             }
             .navigationTitle("Goals")
             .navigationBarTitleDisplayMode(.inline)

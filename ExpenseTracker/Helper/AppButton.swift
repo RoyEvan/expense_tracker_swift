@@ -12,8 +12,9 @@ struct AppButton: View {
     var systemName: String = "plus"
     var textColor: Color = .white
     var backgroundColor: String = "appColor"
+    var action = {}
     var body: some View {
-        HStack {
+        Button(action: action) {
             Image(systemName: systemName)
             Text(title)
         }

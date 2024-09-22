@@ -13,7 +13,8 @@ struct ExpenseTrackerApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+//            TestCustomListView()
         }
-//        .modelContainer(for: TransactionModel.self)
+//        .modelContainer(for: [TransactionModel.self, BalanceModel.self])
     }
 }

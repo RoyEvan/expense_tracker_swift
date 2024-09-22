@@ -13,8 +13,11 @@ struct HomeView: View {
     
     @Environment(\.modelContext) var modelContext
     @Query var transactions: [TransactionModel]
+    @Query(sort: \BalanceModel.date_logged, order: .reverse) var balances: [BalanceModel]
     
     var body: some View {
+        var balance: BalanceModel = getBalance()
+        
         NavigationStack {
             VStack(spacing: 12){
                 Text("Summary")
@@ -22,24 +25,25 @@ struct HomeView: View {
                     .font(.headline)
                     .padding(.bottom, 8)
                 HStack{
-                    AppCard(iconTitle: "🤑", iconSub: "+", subTitle: "Income", money: "0",view: false)
+                    AppCard(iconTitle: "🤑", subTitle: "Income", money: String(countTransactions(t: transactions)), view: false)
+                    
                     NavigationLink(destination: ExpenseView()){
-                        AppCard(iconTitle: "💸", iconSub: "-", subTitle: "Expense", money: "0")
+                        AppCard(iconTitle: "💸", iconSub: "-", subTitle: "Expense", money: String(countTransactions(status: false, t: transactions)))
                     }
                 }
                 HStack{
                     NavigationLink(destination: SavingsView().modelContainer(for: Saving.self)) {
-                        AppCard(iconTitle: "👝", subTitle: "Saving 20%", money: "0")
+                        AppCard(iconTitle: "👝", subTitle: "Saving 20%", money: String(balance.savings))
                     }
                     
-                   
-
+                    
+                    
                     NavigationLink(destination: GoalsView().modelContainer(for: GoalModel.self))
                     {
-                        AppCard(iconTitle: "📌", subTitle: "Goals 30%", money: "0")
+                        AppCard(iconTitle: "📌", subTitle: "Goals 30%", money: String(balance.goals))
                     }
                     
-    
+                    
                 }.padding(.bottom, 15)
                 
                 HStack{
@@ -68,9 +72,25 @@ struct HomeView: View {
                         
                         Spacer()
                         
-                        NavigationLink(destination: Example()) {
-                            AppButton(title: "Add First Income", textColor: .white, backgroundColor: "appColor").padding(.bottom, 8)
-                        }
+                        AppButton(
+                            title: "Add First Income",
+                            action: {
+                                showingAddTransaction.toggle()
+                            }
+                        )
+                        
+                        //                        Button(action: {
+                        //                            showingAddTransaction.toggle()
+                        //                        }) {
+                        //                            HStack {
+                        //                                Image(systemName: "plus").foregroundColor(.white).font(.system(size: 20)).fontWeight(.bold)
+                        //                                Text("Add First Income").foregroundColor(.white).font(.system(size: 20)).fontWeight(.bold)
+                        //                            }
+                        //                            .padding()
+                        //                        }
+                        //                        .frame(maxWidth: .infinity)
+                        //                        .background(Color("appColor"))
+                        //                        .cornerRadius(10)
                     }
                     else {
                         Picker("Select Option", selection: $selectedSegment) {
@@ -113,14 +133,34 @@ struct HomeView: View {
             .padding()
             .sheet(isPresented: $showingAddTransaction) {
                 AddTransactionView(isPresented: $showingAddTransaction)
+                    .modelContainer(for: [TransactionModel.self, BalanceModel.self])
             }
             .navigationTitle("Dashboard")
         }.edgesIgnoringSafeArea(.bottom)
     }
     
-  
+    func countTransactions(status: Bool = true, t: [TransactionModel]) -> Int64 {
+        var calendar = Calendar.current
+        var currentMonth = calendar.component(.month, from: Date())
+        
+        return t.filter { $0.status == status }
+            .filter { calendar.component(.month, from: $0.date) == currentMonth }
+            .reduce(0) { $0 + $1.amount }
+    }
+    
+    func getBalance() -> BalanceModel {
+        if(balances.isEmpty) {
+            let newBalance: BalanceModel = BalanceModel()
+            
+            modelContext.insert(newBalance)
+            
+            return newBalance
+        }
+
+        return balances.first!
+    }
 }
 
 #Preview {
-    HomeView().modelContainer(for: TransactionModel.self)
+    HomeView().modelContainer(for: [TransactionModel.self, BalanceModel.self])
 }

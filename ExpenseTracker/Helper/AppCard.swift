@@ -9,10 +9,10 @@ import SwiftUI
 
 
 struct AppCard: View {
-    var iconTitle: String
-    var iconSub: String?
-    var subTitle: String
-    var money: String
+    var iconTitle: String = "iconTitle"
+    var iconSub: String? = "+"
+    var subTitle: String = "subTitle"
+    var money: String = "0"
     var view: Bool = true
     var body: some View {
         ZStack(alignment: .topTrailing) {
@@ -35,7 +35,7 @@ struct AppCard: View {
                         .foregroundStyle(Color("textColor"))
                 }
                 
-                Text("IDR \(money)")
+                Text("Rp. \(money)")
                     .font(.system(size: 16, weight: .bold, design: .default))
                     .foregroundStyle(Color("textColor"))
             }
