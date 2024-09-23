@@ -32,14 +32,17 @@ struct HomeView: View {
                     }
                 }
                 HStack{
-                    NavigationLink(destination: SavingsView(totalSaving: Int(balance.savings)).modelContainer(for: Saving.self)) {
+                    NavigationLink(destination: SavingsView(totalSaving: Int(balance.savings))
+//                        .modelContainer(for: Saving.self)
+                    ) {
                         AppCard(iconTitle: "👝", subTitle: "Saving 20%", money: String(balance.savings))
                     }
                     
                     
                     
-                    NavigationLink(destination: GoalsView().modelContainer(for: GoalModel.self))
-                    {
+                    NavigationLink(destination: GoalsView()
+//                        .modelContainer(for: [GoalModel.self])
+                    ) {
                         AppCard(iconTitle: "📌", subTitle: "Goals 30%", money: String(balance.goals))
                     }
                     
@@ -133,15 +136,15 @@ struct HomeView: View {
             .padding()
             .sheet(isPresented: $showingAddTransaction) {
                 AddTransactionView(isPresented: $showingAddTransaction)
-                    .modelContainer(for: [TransactionModel.self, BalanceModel.self])
+//                    .modelContainer(for: [TransactionModel.self, BalanceModel.self])
             }
             .navigationTitle("Dashboard")
         }.edgesIgnoringSafeArea(.bottom)
     }
     
     func countTransactions(status: Bool = true, t: [TransactionModel]) -> Int64 {
-        var calendar = Calendar.current
-        var currentMonth = calendar.component(.month, from: Date())
+        let calendar = Calendar.current
+        let currentMonth = calendar.component(.month, from: Date())
         
         return t.filter { $0.status == status }
             .filter { calendar.component(.month, from: $0.date) == currentMonth }
@@ -150,7 +153,7 @@ struct HomeView: View {
     
     func getBalance() -> BalanceModel {
         if(balances.isEmpty) {
-            let newBalance: BalanceModel = BalanceModel()
+            let newBalance: BalanceModel = BalanceModel(needs: 0, savings: 0, goals: 0, date_logged: Date())
             
             modelContext.insert(newBalance)
             
@@ -162,5 +165,6 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView().modelContainer(for: [TransactionModel.self, BalanceModel.self])
+    HomeView()
+        .modelContainer(for: [TransactionModel.self, BalanceModel.self])
 }

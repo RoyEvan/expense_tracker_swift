@@ -21,6 +21,7 @@ struct AddTransactionView: View {
     
     @Environment(\.modelContext) var modelContext
     @Query(sort: \BalanceModel.date_logged, order: .reverse) var balance: [BalanceModel]
+    @Query(sort: \GoalModel.priority, order: .forward) var goals: [GoalModel]
 
     private func categoryOptions() -> [String] {
         switch transactionType {
@@ -95,7 +96,8 @@ struct AddTransactionView: View {
                             modelContext.insert(newTransaction)
                             
                             // Cek apakah bulannya sama,
-                            let currentBalance = balance.first!
+                            guard let currentBalance = balance.first else { fatalError()
+                            }
                             
                             let calendar = Calendar.current
                             let lastBalanceMonth = calendar.component(.month, from: currentBalance.date_logged)
@@ -211,6 +213,6 @@ struct AddTransactionView: View {
 
 #Preview {
     AddTransactionView(isPresented: .constant(true))
-        .modelContainer(for: [TransactionModel.self, BalanceModel.self])
+//        .modelContainer(for: [TransactionModel.self, BalanceModel.self])
 }
 

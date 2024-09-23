@@ -14,7 +14,7 @@ struct AddGoalView: View {
     
     @State var title: String = ""
     @State var amount: String = ""
-    @State var priority: String = ""
+//    @State var priority: String = ""
     
     @Environment(\.modelContext) var modelContext
     @Query var goals: [GoalModel]
@@ -52,30 +52,30 @@ struct AddGoalView: View {
                         }
                 }
 
-                HStack {
-                    Text("Priority\t")
-                        .foregroundColor(.black)
-                    TextField("Priority", text: $priority)
-                        .keyboardType(.numberPad)
-                        .onChange(of: priority, initial: false) { oldValue, newValue in
-                            // Filter the string to allow only numbers
-                            priority = newValue.filter { $0.isNumber }
-                            priority = String(priority.prefix(2))
-                            
-                            if(priority.count <= 0) {
-                                priority = ""
-                            }
-                            else if(Int(priority)! > 3) {
-                                priority = "3"
-                            }
-                            else if(Int(priority)! <= 0) {
-                                priority = "1"
-                            }
-                            else {
-                                priority = priority.trimmingCharacters(in: .whitespacesAndNewlines)
-                            }
-                        }
-                }
+//                HStack {
+//                    Text("Priority\t")
+//                        .foregroundColor(.black)
+//                    TextField("Priority", text: $priority)
+//                        .keyboardType(.numberPad)
+//                        .onChange(of: priority, initial: false) { oldValue, newValue in
+//                            // Filter the string to allow only numbers
+//                            priority = newValue.filter { $0.isNumber }
+//                            priority = String(priority.prefix(2))
+//                            
+//                            if(priority.count <= 0) {
+//                                priority = ""
+//                            }
+//                            else if(Int(priority)! > 3) {
+//                                priority = "3"
+//                            }
+//                            else if(Int(priority)! <= 0) {
+//                                priority = "1"
+//                            }
+//                            else {
+//                                priority = priority.trimmingCharacters(in: .whitespacesAndNewlines)
+//                            }
+//                        }
+//                }
             }
             .navigationBarTitle("New Goal", displayMode: .inline)
             .navigationBarItems(
@@ -83,13 +83,27 @@ struct AddGoalView: View {
                     self.isPresented = false
                 }.foregroundColor(.red),
                 trailing: Button("Add") {
-                    if(title.count>0 && amount.count>0 && priority.count>0 && UInt64(amount)!>0 && Int(priority)!>0) {
+                    if(title.count>0 &&
+                       amount.count>0 &&
+//                       priority.count>0 &&
+                       Int64(amount)!>0
+//                       Int(priority)!>0
+                    ) {
                         
-                        let newGoal = GoalModel(priority: Int(priority)!, title: title, amount: Int64(amount)!, status: true)
                         
-                        modelContext.insert(newGoal)
+                        let activeGoals = goals
+                            .filter{ $0.status == false }
+                            .sorted { $0.priority < $1.priority }
                         
-                        self.isPresented = false
+                        // Cek jumlah goal
+                        if(activeGoals.count <= 3) {
+                            let newGoal = GoalModel(priority: activeGoals.count+1, title: title, amount: Int64(amount)!, status: true)
+                            
+                            modelContext.insert(newGoal)
+                            print(goals.count)
+                            
+                            self.isPresented = false
+                        }
                     }
                     else {
                         showAlert = true
@@ -109,5 +123,5 @@ struct AddGoalView: View {
 
 #Preview {
     AddGoalView(isPresented: .constant(true))
-        .modelContainer(for: GoalModel.self)
+//        .modelContainer(for: GoalModel.self)
 }

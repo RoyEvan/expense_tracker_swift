@@ -16,4 +16,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .modelContainer(for: [TransactionModel.self, BalanceModel.self, GoalModel.self, Saving.self])
 }

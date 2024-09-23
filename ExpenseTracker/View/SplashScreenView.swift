@@ -15,7 +15,8 @@ struct SplashScreenView: View {
             Color("appColor")
                 .ignoresSafeArea()
             if self.isActive{
-                HomeView().modelContainer(for: [TransactionModel.self, BalanceModel.self])
+                HomeView()
+//                    .modelContainer(for: [TransactionModel.self, BalanceModel.self, GoalModel.self])
             }else{
                 Text("Monthy")
                     .foregroundStyle(.white)
@@ -39,5 +40,5 @@ struct SplashScreenView: View {
 }
 
 #Preview {
-    SplashScreenView()
+    SplashScreenView().modelContainer(for: [TransactionModel.self, BalanceModel.self, GoalModel.self])
 }

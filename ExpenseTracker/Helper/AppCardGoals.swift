@@ -10,11 +10,15 @@ import SwiftUI
 
 struct AppCardGoals: View {
     var goal: GoalModel = GoalModel()
-    
+//    
     @Query(sort: \BalanceModel.date_logged, order: .reverse) var balances: [BalanceModel]
     
     var body: some View {
+        
         VStack {
+            let percentFinish: Float = (Float(balances.first?.goals ?? 0)/Float(goal.amount))
+//                let percentFinish: Float = (0)/Float(100)
+            
             HStack {
                 Image(systemName: "house.fill")
                     .padding(10)
@@ -22,38 +26,45 @@ struct AppCardGoals: View {
                     .cornerRadius(10)
                 
                 Text(goal.title).font(.headline)
+//                    Text("title").font(.headline)
                 
                 Spacer()
-                let percentFinish: Int = Int((Float(balances.first!.goals)/Float(goal.amount))*100.0)
-                Text("\(percentFinish)%")
+                
+                Text("\(Int(percentFinish*100))%")
                     .bold()
                     .foregroundColor(Color("appColor"))
             }
             
-            ProgressView(value: 0.5)
+            ProgressView(value: percentFinish)
             
             HStack {
-                Text("\(balances.first!.goals)")
+                Text("\(balances.first?.goals ?? 0)")
                     .fontWeight(.medium)
                     .font(.system(size: 12))
+//                    Text("\(0)")
+//                        .fontWeight(.medium)
+//                        .font(.system(size: 12))
                 
                 Spacer()
                 
                 Text("\(goal.amount)")
                     .fontWeight(.medium)
                     .font(.system(size: 12))
+//                    Text("\(0)")
+//                        .fontWeight(.medium)
+//                        .font(.system(size: 12))
             }
         }
-        .padding()
-        .frame(width: .infinity)
-        .background(.white)
-        .cornerRadius(10)
-        .shadow(radius: 3)
         
-        Text("")
+        
+//        .padding()
+//        .frame(width: .infinity)
+//        .background(.white)
+//        .cornerRadius(10)
+//        .shadow(radius: 3)
     }
 }
 
 #Preview {
-    AppCardGoals(goal: GoalModel()).modelContainer(for: BalanceModel.self)
+    AppCardGoals()
 }

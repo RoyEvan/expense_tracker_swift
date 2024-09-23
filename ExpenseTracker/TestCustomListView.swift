@@ -61,7 +61,10 @@ struct TestCustomListView: View {
                 .listRowSeparator(.hidden)
                 
             }
-//            .scrollContentBackground(.hidden)
+            .scrollContentBackground(.hidden)
+            .toolbar() {
+                EditButton()
+            }
 //            .background()
 //            .alert()
         }

@@ -105,5 +105,4 @@ private let dateFormatter: DateFormatter = {
 
 #Preview {
     SavingsView(totalSaving: 0)
-        .modelContainer(for: Saving.self)
 }
