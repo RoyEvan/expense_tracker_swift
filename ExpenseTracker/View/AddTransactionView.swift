@@ -32,36 +32,6 @@ struct AddTransactionView: View {
                 return []
         }
     }
-    
-    private func updateBalance(type: Int8 = 1, isNew: Bool = false, currentBalance: BalanceModel) -> Void {
-        // type = -1 -> expense same month
-        // type = 1 -> income same month
-        
-        // isNew = true -> new month
-        // isNew = false -> same month
-        
-        if isNew {
-            var incomeLeft = Int64(amount)!;
-            
-            let savingSaved: Int64 = currentBalance.savings + Int64(Double(amount)! * 0.2)
-            incomeLeft = incomeLeft - savingSaved
-            
-            let goalSaved: Int64 = currentBalance.goals + Int64(Double(amount)! * 0.3)
-            incomeLeft = incomeLeft - goalSaved
-            
-            
-            let newBalance = BalanceModel(needs: incomeLeft, savings: savingSaved, goals: goalSaved, date_logged: transactionDate)
-            
-            modelContext.insert(newBalance)
-        }
-        else {
-            
-        }
-        
-        
-        
-        
-    }
 
     
     var body: some View {
@@ -84,6 +54,14 @@ struct AddTransactionView: View {
                             // Filter the string to allow only numbers
                             amount = newValue.filter { $0.isNumber }
                             amount = String(amount.prefix(12))
+                            
+                            if(amount.count <= 0) {
+                                amount = ""
+                            }
+                            else if(Int64(amount)! <= 0) {
+                                amount = "1"
+                            }
+                            
                             amount = amount.trimmingCharacters(in: .whitespacesAndNewlines)
                         }
                         .keyboardType(.numberPad)
@@ -141,7 +119,6 @@ struct AddTransactionView: View {
                                 self.isPresented = false
                             }
                             else {
-                            updateBalance(type: 2, currentBalance: currentBalance)
                                 var incomeLeft = Int64(amount)!;
                                 
                                 let savingSaved: Int64 = Int64(Double(amount)! * 0.2)
@@ -158,10 +135,7 @@ struct AddTransactionView: View {
                             }
                         }
                         else if (String(transactionType).lowercased() == "expenses") {
-                            let newTransaction = TransactionModel(category: category, date: transactionDate, amount: (-1 * Int64(amount)!), status: false, monthly: isMonthly)
                             
-                            // Insert to DB (SwiftData)
-                            modelContext.insert(newTransaction)
                             
                             var currentBalance = balance.first!
                             
@@ -172,6 +146,11 @@ struct AddTransactionView: View {
                             var spending = Int64(amount)!;
                             // Jika saldo bulan lalu lebih dari pengeluaran sekarang
                             if(currentBalance.needs >= spending) {
+                                let newTransaction = TransactionModel(category: category, date: transactionDate, amount: (-1 * Int64(amount)!), status: false, monthly: isMonthly)
+                                
+                                // Insert to DB (SwiftData)
+                                modelContext.insert(newTransaction)
+                                
                                 let needsBalance = currentBalance.needs - spending
                                 
                                 // Insert Log Balance Baru

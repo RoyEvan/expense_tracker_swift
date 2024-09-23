@@ -37,6 +37,14 @@ struct AddGoalView: View {
                         .onChange(of: amount, initial: false) { oldValue, newValue in
                             // Filter the string to allow only numbers
                             amount = newValue.filter { $0.isNumber }
+                            
+                            if(amount.count <= 0) {
+                                amount = ""
+                            }
+                            else if(Int64(amount)! <= 0) {
+                                amount = "1"
+                            }
+                            
                             amount = String(amount
                                 .trimmingCharacters(in: .whitespacesAndNewlines)
                                 .prefix(12)
@@ -60,6 +68,9 @@ struct AddGoalView: View {
                             else if(Int(priority)! > 3) {
                                 priority = "3"
                             }
+                            else if(Int(priority)! <= 0) {
+                                priority = "1"
+                            }
                             else {
                                 priority = priority.trimmingCharacters(in: .whitespacesAndNewlines)
                             }
@@ -71,11 +82,10 @@ struct AddGoalView: View {
                 leading: Button("Cancel") {
                     self.isPresented = false
                 }.foregroundColor(.red),
-                trailing: Button(action: {
-                    
+                trailing: Button("Add") {
                     if(title.count>0 && amount.count>0 && priority.count>0 && UInt64(amount)!>0 && Int(priority)!>0) {
                         
-                        let newGoal = GoalModel(priority: Int(priority)!, title: title, amount: UInt64(amount)!, status: true)
+                        let newGoal = GoalModel(priority: Int(priority)!, title: title, amount: Int64(amount)!, status: true)
                         
                         modelContext.insert(newGoal)
                         
@@ -84,9 +94,6 @@ struct AddGoalView: View {
                     else {
                         showAlert = true
                     }
-                }) {
-                    Text("Add")
-
                 }
                 .foregroundColor(.blue)
                 .alert(isPresented: $showAlert) {

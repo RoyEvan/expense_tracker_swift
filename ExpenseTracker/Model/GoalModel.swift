@@ -15,6 +15,7 @@ class GoalModel {
     var title: String
     var amount: Int64
     var status: Bool
+    var date: Date
     
     
     init(priority: Int = 1, title: String = "Sample Goal", amount: Int64 = 1000, status: Bool = true){
@@ -29,5 +30,6 @@ class GoalModel {
         self.title = title
         self.amount = amount
         self.status = status
+        self.date = Date()
     }
 }
