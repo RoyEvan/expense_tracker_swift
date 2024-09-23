@@ -96,7 +96,16 @@ struct AddTransactionView: View {
                             modelContext.insert(newTransaction)
                             
                             // Cek apakah bulannya sama,
-                            guard let currentBalance = balance.first else { fatalError()
+//                            guard let currentBalance = balance.first else { fatalError()
+
+            
+                            // Cek apakah bulannya sama
+                            
+                            guard let currentBalance = balance.first else {
+                                // Tangani kasus ketika balance kosong
+                                print("No balance available.")
+                                return // Atau lakukan tindakan lain sesuai kebutuhan
+
                             }
                             
                             let calendar = Calendar.current
@@ -133,16 +142,26 @@ struct AddTransactionView: View {
                                 let newBalance = BalanceModel(needs: incomeLeft, savings: savingSaved, goals: goalSaved, date_logged: transactionDate)
                                 
                                 modelContext.insert(newBalance)
-                                self.isPresented = false
                                 
                                 
-                                let month = DateFormatter().monthSymbols[Calendar.current.component(.month, from: Date()) - 1]
-//                                let formattedDate = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .none)
                                 
-                                let newSaving = Saving(title: "20% from \(month) Income", date: Date(), amount: savingSaved)
-                                modelContext.insert(newSaving)
-                                self.isPresented = false
+                                
                             }
+                            
+                            let savingAmount: Int64 = Int64(Double(amount)! * 0.2)
+                            
+                            
+                            let month = DateFormatter().monthSymbols[Calendar.current.component(.month, from: Date()) - 1]
+//                                let formattedDate = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .none)
+                            
+                            let newSaving = Saving(title: "20% from \(month) Income", date: Date(), amount: savingAmount)
+                            
+                            modelContext.insert(newSaving)
+                            
+                            print(modelContext.insert(newSaving))
+                            
+                            
+                            self.isPresented = false
                         }
                         else if (String(transactionType).lowercased() == "expenses") {
                             

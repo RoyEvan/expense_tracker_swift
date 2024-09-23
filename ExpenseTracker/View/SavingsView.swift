@@ -32,10 +32,12 @@ struct SavingsView: View {
                         Text("Total Savings")
                             .font(.headline)
                             .foregroundColor(.white)
+                            .frame(maxWidth: .infinity, alignment: .center)
                         
                         Text("\(totalSaving)")
                             .font(.largeTitle)
                             .foregroundColor(.white)
+                            .frame(maxWidth: .infinity, alignment: .center)
                     }
                     .padding()
                     .background(Color.clear)
@@ -70,29 +72,50 @@ struct SavingsView: View {
                 .padding(.horizontal)
                 
                 // History Section
-                List(listSavings) { saving in
-                    VStack {
-                        HStack {
-                            Text("\(saving.title)")
-                                .font(.title3.bold())
-                            Spacer()
+//                List(listSavings) { t in
+//                    if(!t.status) {
+//                        CardTransaction(transaction: t)
+//                            .listRowBackground(Color.clear)
+//                            .listRowInsets(EdgeInsets())
+//                            .listRowSeparator(.hidden)
+//                            .padding(.bottom,10)
+//                    }
+//                }
+//                .listStyle(PlainListStyle())
+//                .background(Color.clear)
+                
+                if listSavings.isEmpty {
+                    Text("No savings available.")
+                        .foregroundColor(.gray)
+                        .font(.headline)
+                        .padding()
+                } else {
+                    List(listSavings) { saving in
+                        VStack {
+                            HStack {
+                                Text("\(saving.title)")
+                                    .font(.title3.bold())
+                                Spacer()
+                            }
+                            HStack {
+                                Text("\(saving.date, formatter: dateFormatter)")
+                                Spacer()
+                                Text(String(format: "+ Rp \( saving.amount)")).foregroundColor(.green)
+                            }
                         }
-                        HStack {
-                            Text("\(saving.date, formatter: dateFormatter)")
-                            Spacer()
-                            Text(String(format: "+ Rp %.2f", saving.amount)).foregroundColor(.green)
-                        }
+                        .padding()
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(10.0)
+                        .listRowSeparator(.hidden)
                     }
-                    .padding()
-                    .background(Color.gray.opacity(0.1))
-                    .cornerRadius(10.0)
-                    .listRowSeparator(.hidden)
+                    .listStyle(PlainListStyle())
                 }
-                .listStyle(PlainListStyle())
             }
             .navigationTitle("Savings")
-            Spacer()
+            .frame(maxHeight: .infinity, alignment: .top)
         }
+        Spacer()
+        
     }
 }
 
@@ -105,4 +128,7 @@ private let dateFormatter: DateFormatter = {
 
 #Preview {
     SavingsView(totalSaving: 0)
+        .modelContainer(for: [Saving.self])
+//    HomeView().modelContainer(for: [TransactionModel.self, BalanceModel.self])
+
 }

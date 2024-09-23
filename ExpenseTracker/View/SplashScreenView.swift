@@ -40,5 +40,6 @@ struct SplashScreenView: View {
 }
 
 #Preview {
-    SplashScreenView().modelContainer(for: [TransactionModel.self, BalanceModel.self, GoalModel.self])
+    SplashScreenView()
+        .modelContainer(for: [TransactionModel.self, BalanceModel.self, GoalModel.self])
 }
