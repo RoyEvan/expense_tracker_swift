@@ -1,14 +1,10 @@
 import SwiftUI
 import SwiftData
 
-//struct BalanceModel {
-//    var savings: Int64
-//}
-
 struct SavingsView: View {
     @Environment(\.modelContext) var modelContext
     @Query var savings: [Saving]
-    
+
     @State private var selectedMonth = Calendar.current.component(.month, from: Date())
     @State private var selectedYear = Calendar.current.component(.year, from: Date())
     
@@ -17,6 +13,8 @@ struct SavingsView: View {
     
     @Query var listSavings: [Saving]
     
+    @State private var filteredSavings: [Saving] = []
+
     var totalSaving: Int
     
     var body: some View {
@@ -54,6 +52,9 @@ struct SavingsView: View {
                     }
                     .pickerStyle(MenuPickerStyle())
                     .frame(width: 150)
+                    .onChange(of: selectedMonth) { _ in
+                        updateFilteredSavings()
+                    }
                     
                     Picker("Year", selection: $selectedYear) {
                         ForEach(years, id: \.self) { year in
@@ -63,6 +64,9 @@ struct SavingsView: View {
                     }
                     .pickerStyle(MenuPickerStyle())
                     .frame(width: 100)
+                    .onChange(of: selectedYear) { _ in
+                        updateFilteredSavings()
+                    }
                 }
             }
             .padding()
@@ -71,25 +75,13 @@ struct SavingsView: View {
             .padding(.horizontal)
             
             // History Section
-            //                List(listSavings) { t in
-            //                    if(!t.status) {
-            //                        CardTransaction(transaction: t)
-            //                            .listRowBackground(Color.clear)
-            //                            .listRowInsets(EdgeInsets())
-            //                            .listRowSeparator(.hidden)
-            //                            .padding(.bottom,10)
-            //                    }
-            //                }
-            //                .listStyle(PlainListStyle())
-            //                .background(Color.clear)
-            
-            if listSavings.isEmpty {
+            if filteredSavings.isEmpty {
                 Text("No savings available.")
                     .foregroundColor(.gray)
                     .font(.headline)
                     .padding()
             } else {
-                List(listSavings) { saving in
+                List(filteredSavings) { saving in
                     VStack {
                         HStack {
                             Text("\(saving.title)")
@@ -99,7 +91,7 @@ struct SavingsView: View {
                         HStack {
                             Text("\(saving.date, formatter: dateFormatter)")
                             Spacer()
-                            Text(String(format: "+ Rp \( saving.amount)")).foregroundColor(.green)
+                            Text(String(format: "+ Rp \(saving.amount)")).foregroundColor(.green)
                         }
                     }
                     .padding()
@@ -112,8 +104,20 @@ struct SavingsView: View {
         }
         .navigationTitle("Savings")
         .frame(maxHeight: .infinity, alignment: .top)
-        
-        
+        .onAppear {
+            updateFilteredSavings()
+        }
+    }
+    
+    private func updateFilteredSavings() {
+        // Filter listSavings sesuai dengan selectedMonth dan selectedYear
+        filteredSavings = listSavings.filter { saving in
+            let calendar = Calendar.current
+            let savingMonth = calendar.component(.month, from: saving.date)
+            let savingYear = calendar.component(.year, from: saving.date)
+            
+            return savingMonth == selectedMonth && savingYear == selectedYear
+        }
     }
 }
 
@@ -127,6 +131,4 @@ private let dateFormatter: DateFormatter = {
 #Preview {
     SavingsView(totalSaving: 0)
         .modelContainer(for: [Saving.self])
-    //    HomeView().modelContainer(for: [TransactionModel.self, BalanceModel.self])
-    
 }
