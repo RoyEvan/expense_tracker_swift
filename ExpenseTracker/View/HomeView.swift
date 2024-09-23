@@ -10,13 +10,13 @@ struct HomeView: View {
     @State private var showingAddTransaction = false
     @State private var showingAddGoal = false
     @State private var selectedSegment = 0
-    
     @Environment(\.modelContext) var modelContext
     @Query var transactions: [TransactionModel]
+    @Query var balanceSaving: [BalanceModel]
     @Query(sort: \BalanceModel.date_logged, order: .reverse) var balances: [BalanceModel]
     
     var body: some View {
-        var balance: BalanceModel = getBalance()
+        let balance: BalanceModel = getBalance()
         
         NavigationStack {
             VStack(spacing: 12){
@@ -32,7 +32,7 @@ struct HomeView: View {
                     }
                 }
                 HStack{
-                    NavigationLink(destination: SavingsView().modelContainer(for: Saving.self)) {
+                    NavigationLink(destination: SavingsView(totalSaving: Int(balance.savings)).modelContainer(for: Saving.self)) {
                         AppCard(iconTitle: "👝", subTitle: "Saving 20%", money: String(balance.savings))
                     }
                     

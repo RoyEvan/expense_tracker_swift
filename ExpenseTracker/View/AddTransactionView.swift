@@ -132,6 +132,14 @@ struct AddTransactionView: View {
                                 
                                 modelContext.insert(newBalance)
                                 self.isPresented = false
+                                
+                                
+                                let month = DateFormatter().monthSymbols[Calendar.current.component(.month, from: Date()) - 1]
+//                                let formattedDate = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .none)
+                                
+                                let newSaving = Saving(title: "20% from \(month) Income", date: Date(), amount: savingSaved)
+                                modelContext.insert(newSaving)
+                                self.isPresented = false
                             }
                         }
                         else if (String(transactionType).lowercased() == "expenses") {
