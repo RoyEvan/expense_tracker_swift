@@ -154,7 +154,7 @@ struct AddTransactionView: View {
                             let month = DateFormatter().monthSymbols[Calendar.current.component(.month, from: Date()) - 1]
 //                                let formattedDate = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .none)
                             
-                            let newSaving = Saving(title: "20% from \(month) Income", date: Date(), amount: savingAmount)
+                            let newSaving = Saving(title: "20% from \(month) Income", date: transactionDate, amount: savingAmount)
                             
                             modelContext.insert(newSaving)
                             

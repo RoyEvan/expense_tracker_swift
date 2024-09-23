@@ -166,5 +166,5 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
-        .modelContainer(for: [TransactionModel.self, BalanceModel.self])
+        .modelContainer(for: [TransactionModel.self, BalanceModel.self, GoalModel.self, Saving.self])
 }
