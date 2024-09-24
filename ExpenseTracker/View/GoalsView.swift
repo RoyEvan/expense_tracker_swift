@@ -30,38 +30,20 @@ struct GoalsView: View {
                 else {
                     List {
                         ForEach(filteredGoals) {
-                            g in VStack {
-                                HStack {
+                            g in HStack {
+                                NavigationLink(destination: IncomeView()
+            //                        .modelContainer(for: Saving.self)
+                                ) {
                                     AppCardGoals(goal: g)
-    //                                    .modelContainer(for: BalanceModel.self)
-                                        .padding()
-    //                                AppCardGoals()
-    //                                    .modelContainer(for: BalanceModel.self)
-    //                                    .padding()
-                                    
-                                    
-                                    VStack {
-                                        Button(action: {
-                                            // Ubah Prioritas
-                                            
-                                            
-                                        }) {
-                                            Image(systemName: "arrow.up").bold()
-                                        }
-                                        .padding(2)
-                                    }
                                 }
                                 
-                            
                             }
+                            .frame(maxWidth: .infinity)
                         }
-                        
-//                        .onDelete(perform: {})
-//                        .onMove(perform: { indices, newOffset in
-//                            move(from: indices, to: newOffset, arr: updatableGoals)
-//                        })
+                        .onDelete(perform: deleteGoal)
+                        .onMove(perform: movePriority)
                     }
-                    .scrollContentBackground(.hidden)
+//                    .scrollContentBackground(.hidden)
                 }
                
                 
@@ -81,7 +63,7 @@ struct GoalsView: View {
 //                                .bold()
 //                                .padding()
 //                        }
-//                        
+//
 //                    }
 //                    .frame(maxWidth: .infinity)
 //                    .background(Color("appColor"))
@@ -93,22 +75,39 @@ struct GoalsView: View {
                 AddGoalView(isPresented: $showingAddGoal)
 //                    .modelContainer(for: [GoalModel.self])
             }
-            .navigationTitle("Goals")
-            .navigationBarTitleDisplayMode(.inline)
+        }
+            
+    }
+    
+    func deleteGoal(at offsets: IndexSet) {
+        for i in offsets {
+            let goalToDelete = filteredGoals[i]
+            goalToDelete.status = false
+        }
+        
+        
+        do {
+            try modelContext.save()  // Save the changes
+        }
+        catch {
+            
         }
     }
     
-//    func move(goal: GoalModel, offset: Int) {
-//        let currentPriority = goal.priority
-//        let destinationPriority = currentPriority + offset
-//        var destinationGoal = filteredGoals.filter { $0.priority == destinationPriority }.first
-//        
-//        destinationGoal!.priority = currentPriority
-//        
-//        goal.priority = destinationPriority
-//        
-//        modelContext.save()
-//    }
+    func movePriority(from source: IndexSet, to destination: Int) {
+        var arr = filteredGoals
+        arr.move(fromOffsets: source, toOffset: destination)
+        
+        var loop = 1
+        for i in arr {
+            i.priority = loop
+            
+            loop += 1
+        }
+    }
+    
+    
+    
 }
 
 #Preview {

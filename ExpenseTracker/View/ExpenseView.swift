@@ -119,5 +119,5 @@ struct ExpenseView: View {
 
 #Preview {
     ExpenseView()
-        .modelContainer(for: TransactionModel.self)
+         .modelContainer(for: TransactionModel.self)
 }
