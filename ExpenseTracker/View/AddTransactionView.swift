@@ -171,7 +171,7 @@ struct AddTransactionView: View {
                             var spending = Int64(amount)!;
                             // Jika saldo bulan lalu lebih dari pengeluaran sekarang
                             if(currentBalance.needs >= spending) {
-                                let newTransaction = TransactionModel(category: category, date: transactionDate, amount: (-1 * Int64(amount)!), status: false, monthly: isMonthly)
+                                let newTransaction = TransactionModel(category: category, date: transactionDate, amount: Int64(amount)!, status: false, monthly: isMonthly)
                                 
                                 // Insert to DB (SwiftData)
                                 modelContext.insert(newTransaction)
