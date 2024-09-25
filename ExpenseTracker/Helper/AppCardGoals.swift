@@ -10,14 +10,14 @@ import SwiftUI
 
 struct AppCardGoals: View {
     var goal: GoalModel = GoalModel()
-//    
+    
     @Query(sort: \BalanceModel.date_logged, order: .reverse) var balances: [BalanceModel]
     
     var body: some View {
+        let percentFinish: Float = goal.priority == 1 ? (Float(balances.first!.goals)/Float(goal.amount)) : 0.0
         
         VStack {
-            let percentFinish: Float = (Float(balances.first?.goals ?? 0)/Float(goal.amount))
-//                let percentFinish: Float = (0)/Float(100)
+            
             
             HStack {
                 Image(systemName: "house.fill")
@@ -38,7 +38,7 @@ struct AppCardGoals: View {
             ProgressView(value: percentFinish)
             
             HStack {
-                Text("\(balances.first?.goals ?? 0)")
+                Text("\(goal.priority == 1 ? balances.first!.goals : 0)")
                     .fontWeight(.medium)
                     .font(.system(size: 12))
 //                    Text("\(0)")

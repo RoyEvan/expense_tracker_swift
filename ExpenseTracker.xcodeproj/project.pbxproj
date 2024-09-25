@@ -28,8 +28,10 @@
 		043328432C9C39ED0086D79B /* AddGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043328422C9C39ED0086D79B /* AddGoalView.swift */; };
 		046C56422C9A740300759965 /* GoalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046C56412C9A740300759965 /* GoalModel.swift */; };
 		046D74812CA038F2003AEDA6 /* TestCustomListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D74802CA038F2003AEDA6 /* TestCustomListView.swift */; };
+		047C62302CA2462F00B4DF85 /* EditGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047C622F2CA2462F00B4DF85 /* EditGoalView.swift */; };
 		047E40BC2C99DA2600659068 /* AppCardGoals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047E40BB2C99DA2600659068 /* AppCardGoals.swift */; };
 		04CDC0252C9E876B00D76717 /* BalanceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CDC0242C9E876B00D76717 /* BalanceModel.swift */; };
+		04E86AF52CA322CC001C10D3 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 04E86AF42CA322CC001C10D3 /* ConfettiSwiftUI */; };
 		04F73F2A2C9D27E00028AA83 /* SavingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F73F292C9D27E00028AA83 /* SavingsModel.swift */; };
 		04F73F2C2C9D28890028AA83 /* SavingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F73F2B2C9D28890028AA83 /* SavingsView.swift */; };
 /* End PBXBuildFile section */
@@ -76,6 +78,7 @@
 		043328422C9C39ED0086D79B /* AddGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGoalView.swift; sourceTree = "<group>"; };
 		046C56412C9A740300759965 /* GoalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalModel.swift; sourceTree = "<group>"; };
 		046D74802CA038F2003AEDA6 /* TestCustomListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCustomListView.swift; sourceTree = "<group>"; };
+		047C622F2CA2462F00B4DF85 /* EditGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGoalView.swift; sourceTree = "<group>"; };
 		047E40BB2C99DA2600659068 /* AppCardGoals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCardGoals.swift; sourceTree = "<group>"; };
 		04CDC0242C9E876B00D76717 /* BalanceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceModel.swift; sourceTree = "<group>"; };
 		04F73F292C9D27E00028AA83 /* SavingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingsModel.swift; sourceTree = "<group>"; };
@@ -87,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04E86AF52CA322CC001C10D3 /* ConfettiSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,6 +184,7 @@
 				041212712C98ABE9001333F1 /* GoalsView.swift */,
 				043328422C9C39ED0086D79B /* AddGoalView.swift */,
 				04F73F2B2C9D28890028AA83 /* SavingsView.swift */,
+				047C622F2CA2462F00B4DF85 /* EditGoalView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -229,6 +234,9 @@
 			dependencies = (
 			);
 			name = ExpenseTracker;
+			packageProductDependencies = (
+				04E86AF42CA322CC001C10D3 /* ConfettiSwiftUI */,
+			);
 			productName = ExpenseTracker;
 			productReference = 0412122C2C983076001333F1 /* ExpenseTracker.app */;
 			productType = "com.apple.product-type.application";
@@ -301,6 +309,9 @@
 				Base,
 			);
 			mainGroup = 041212232C983076001333F1;
+			packageReferences = (
+				04E86AF32CA32244001C10D3 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
+			);
 			productRefGroup = 0412122D2C983076001333F1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -343,6 +354,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				047C62302CA2462F00B4DF85 /* EditGoalView.swift in Sources */,
 				046C56422C9A740300759965 /* GoalModel.swift in Sources */,
 				0412126A2C98554C001333F1 /* TransactionModel.swift in Sources */,
 				0412125D2C983108001333F1 /* HomeView.swift in Sources */,
@@ -692,6 +704,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		04E86AF32CA32244001C10D3 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		04E86AF42CA322CC001C10D3 /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04E86AF32CA32244001C10D3 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 041212242C983076001333F1 /* Project object */;
 }

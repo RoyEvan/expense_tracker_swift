@@ -7,19 +7,29 @@
 
 import SwiftData
 import SwiftUI
+import ConfettiSwiftUI
 
 struct GoalsView: View {
     @Environment(\.modelContext) var modelContext
-    @State private var showingAddGoal = false
+    @State private var showingAddGoal: Bool = false
+    @State var insufficientBalance: Bool = false
+    
+    @State var counter: Int = 0
+    
     @Query(sort: \GoalModel.priority, order: .forward) var goals: [GoalModel]
     var filteredGoals: [GoalModel] {
-        goals.filter { $0.status == true }
+        goals
+            .filter { $0.status == true }
+            .sorted { $0.priority < $1.priority }
     }
+    
+    @Query(sort: \BalanceModel.date_logged, order: .reverse) var balances: [BalanceModel]
     
     
     var body: some View {
         NavigationStack {
             VStack {
+                
                 if(filteredGoals.count <= 0) {
                     VStack {
                         Spacer()
@@ -31,52 +41,79 @@ struct GoalsView: View {
                     List {
                         ForEach(filteredGoals) {
                             g in HStack {
-                                NavigationLink(destination: IncomeView()
-            //                        .modelContainer(for: Saving.self)
+                                NavigationLink(destination: EditGoalView(goal: g)
                                 ) {
                                     AppCardGoals(goal: g)
                                 }
+                            }
+                            .swipeActions(edge: .leading) {
+                                Button(action: {
+                                    finishGoal(goal: g)
+                                }) {
+                                    Label("Finish", systemImage: "checkmark.circle.fill")
+                                }
+                                .tint(Color("appColor"))
                                 
                             }
-                            .frame(maxWidth: .infinity)
                         }
                         .onDelete(perform: deleteGoal)
                         .onMove(perform: movePriority)
+                        
                     }
-//                    .scrollContentBackground(.hidden)
+                    .shadow(radius: 10)
+                    .scrollContentBackground(.hidden)
+                    .background()
+                    
+                    
+                    Text("Drag to change priority").foregroundColor(.secondary)
+                    Text("Swipe Left to delete").foregroundColor(.secondary)
+                    Text("Swipe Right to finish").foregroundColor(.secondary)
                 }
-               
                 
-                Spacer()
+                
                 
                 AppButton(title: "Add Your Goal") {
                     showingAddGoal.toggle()
                 }
-                    
-//                    Button(action: {
-//                        showingAddGoal.toggle()
-//                    }) {
-//                        HStack {
-//                            Image(systemName: "plus").foregroundColor(.white).bold()
-//                            Text("Add Your Goal")
-//                                .foregroundColor(.white)
-//                                .bold()
-//                                .padding()
-//                        }
-//
-//                    }
-//                    .frame(maxWidth: .infinity)
-//                    .background(Color("appColor"))
-//                    .cornerRadius(10)
-//                    .padding()
             }
             .padding()
             .sheet(isPresented: $showingAddGoal) {
                 AddGoalView(isPresented: $showingAddGoal)
-//                    .modelContainer(for: [GoalModel.self])
             }
+            .navigationTitle("Goals")
+            .alert(isPresented: $insufficientBalance) {
+                Alert(
+                    title: Text("Insufficient Balance"),
+                    message: Text("You haven't saved enough money to get that.")
+                )
+            }
+            .confettiCannon(counter: $counter, repetitions: 3)
         }
+    }
+    
+    func finishGoal(goal: GoalModel) {
+        if(balances.first!.goals >= goal.amount) {
+            goal.status = false
+//            balances.first!.goals - goal.amount
+            let newBalance = BalanceModel(needs: balances.first!.needs, savings: balances.first!.savings, goals: balances.first!.goals - goal.amount, date_logged: Date())
             
+            modelContext.insert(newBalance)
+            
+            
+            var loop = 1
+            for i in filteredGoals {
+                if(i.status) {
+                    i.priority = loop
+                    
+                    loop += 1
+                }
+            }
+            
+            counter += 1
+        }
+        else {
+            insufficientBalance = true
+        }
     }
     
     func deleteGoal(at offsets: IndexSet) {
@@ -86,12 +123,12 @@ struct GoalsView: View {
         }
         
         
-        do {
-            try modelContext.save()  // Save the changes
-        }
-        catch {
-            
-        }
+//        do {
+//            try modelContext.save()  // Save the changes
+//        }
+//        catch {
+//            
+//        }
     }
     
     func movePriority(from source: IndexSet, to destination: Int) {

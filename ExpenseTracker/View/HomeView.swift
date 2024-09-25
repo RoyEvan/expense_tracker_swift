@@ -25,7 +25,7 @@ struct HomeView: View {
                     .font(.headline)
                     .padding(.bottom, 8)
                 HStack{
-                    AppCard(iconTitle: "🤑", subTitle: "Income", money: String(countTransactions(t: transactions)), view: false)
+                    AppCard(iconTitle: "🤑", subTitle: "Income", money: String(balance.needs), view: false)
                     
                     NavigationLink(destination: ExpenseView()){
                         AppCard(iconTitle: "💸", iconSub: "-", subTitle: "Expense", money: String(countTransactions(status: false, t: transactions)))
@@ -159,6 +159,15 @@ struct HomeView: View {
             
             return newBalance
         }
+        
+//        let calendar = Calendar.current
+//        let lastBalanceMonth = calendar.component(.month, from: balances.first!.date_logged)
+//        let currentMonth = calendar.component(.month, from: Date())
+//        
+//        if(lastBalanceMonth != currentMonth) {
+//            let newMonthBalance = BalanceModel(needs: balances.first!.needs, savings: balances.first!.savings, goals: balances.first!.goals, date_logged: Date())
+//            modelContext.insert()
+//        }
 
         return balances.first!
     }

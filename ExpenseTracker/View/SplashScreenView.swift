@@ -12,20 +12,20 @@ struct SplashScreenView: View {
     @State private var fadeIn = false
     var body: some View {
         ZStack{
-            Color("appColor")
-                .ignoresSafeArea()
-            if self.isActive{
+            Color("appColor").ignoresSafeArea()
+            
+            if self.isActive {
                 HomeView()
-//                    .modelContainer(for: [TransactionModel.self, BalanceModel.self, GoalModel.self])
-            }else{
+            }
+            else{
                 Text("Monthy")
                     .foregroundStyle(.white)
                     .opacity(fadeIn ? 1 : 0)
                     .animation(.easeIn(duration: 1), value: fadeIn)
                     .font(.system(size: 40, weight: .bold, design: .default))
             }
-        }.onAppear {
-            
+        }
+        .onAppear {
             withAnimation {
                 self.fadeIn = true
             }

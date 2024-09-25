@@ -108,57 +108,53 @@ struct AddTransactionView: View {
 
                             }
                             
-                            let calendar = Calendar.current
-                            let lastBalanceMonth = calendar.component(.month, from: currentBalance.date_logged)
-                            let currentMonth = calendar.component(.month, from: Date())
+//                            let calendar = Calendar.current
+//                            let lastBalanceMonth = calendar.component(.month, from: currentBalance.date_logged)
+//                            let currentMonth = calendar.component(.month, from: Date())
                             
                             // Jika sama maka gabung income baru dengan income bulan ini
-                            if (lastBalanceMonth == currentMonth) {
+//                            if (lastBalanceMonth == currentMonth) {
 //                                updateBalance(currentBalance: currentBalance)
-                                var incomeLeft = Int64(amount)!;
+                                var incomeLeft = Int64(amount)! + currentBalance.needs;
                                 
-                                let savingSaved: Int64 = currentBalance.savings + Int64(Double(amount)! * 0.2)
-                                incomeLeft = incomeLeft - savingSaved
+                                let additionalSaving: Double = Double(amount)! * 0.2
+                                let savingSaved: Int64 = currentBalance.savings + Int64(additionalSaving)
+                                incomeLeft = incomeLeft - Int64(additionalSaving)
                                 
-                                let goalSaved: Int64 = currentBalance.goals + Int64(Double(amount)! * 0.3)
-                                incomeLeft = incomeLeft - goalSaved
+                                let additionalGoalSaving: Double = Double(amount)! * 0.3
+                                let goalSaved: Int64 = currentBalance.goals + Int64(additionalGoalSaving)
+                                incomeLeft = incomeLeft - Int64(additionalGoalSaving)
                                 
                                 // Insert Log Balance Baru
                                 let newBalance = BalanceModel(needs: incomeLeft, savings: savingSaved, goals: goalSaved, date_logged: transactionDate)
                                 
                                 modelContext.insert(newBalance)
                                 self.isPresented = false
-                            }
-                            else {
-                                var incomeLeft = Int64(amount)!;
-                                
-                                let savingSaved: Int64 = Int64(Double(amount)! * 0.2)
-                                incomeLeft = incomeLeft - savingSaved
-                                
-                                let goalSaved: Int64 = Int64(Double(amount)! * 0.3)
-                                incomeLeft = incomeLeft - goalSaved
-                                
-                                // Insert Log Balance Baru
-                                let newBalance = BalanceModel(needs: incomeLeft, savings: savingSaved, goals: goalSaved, date_logged: transactionDate)
-                                
-                                modelContext.insert(newBalance)
-                                
-                                
-                                
-                                
-                            }
+//                            }
+//                            else {
+//                                var incomeLeft = Int64(amount)! + currentBalance.needs;
+//                                
+//                                let savingSaved: Int64 = Int64(Double(amount)! * 0.2)
+//                                incomeLeft = incomeLeft - savingSaved
+//                                
+//                                let goalSaved: Int64 = Int64(Double(amount)! * 0.3)
+//                                incomeLeft = incomeLeft - goalSaved
+//                                
+//                                // Insert Log Balance Baru
+//                                let newBalance = BalanceModel(needs: incomeLeft, savings: savingSaved, goals: goalSaved, date_logged: transactionDate)
+//                                
+//                                modelContext.insert(newBalance)
+//                            }
                             
-                            let savingAmount: Int64 = Int64(Double(amount)! * 0.2)
+//                            let savingAmount: Int64 = Int64(Double(amount)! * 0.2)
                             
                             
                             let month = DateFormatter().monthSymbols[Calendar.current.component(.month, from: Date()) - 1]
 //                                let formattedDate = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .none)
                             
-                            let newSaving = Saving(title: "20% from \(month) Income", date: transactionDate, amount: savingAmount)
+                            let newSaving = Saving(title: "20% from \(month) Income", date: transactionDate, amount: Int64(additionalSaving))
                             
                             modelContext.insert(newSaving)
-                            
-                            print(modelContext.insert(newSaving))
                             
                             
                             self.isPresented = false

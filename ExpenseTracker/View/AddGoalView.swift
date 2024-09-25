@@ -51,31 +51,6 @@ struct AddGoalView: View {
                             )
                         }
                 }
-
-//                HStack {
-//                    Text("Priority\t")
-//                        .foregroundColor(.black)
-//                    TextField("Priority", text: $priority)
-//                        .keyboardType(.numberPad)
-//                        .onChange(of: priority, initial: false) { oldValue, newValue in
-//                            // Filter the string to allow only numbers
-//                            priority = newValue.filter { $0.isNumber }
-//                            priority = String(priority.prefix(2))
-//                            
-//                            if(priority.count <= 0) {
-//                                priority = ""
-//                            }
-//                            else if(Int(priority)! > 3) {
-//                                priority = "3"
-//                            }
-//                            else if(Int(priority)! <= 0) {
-//                                priority = "1"
-//                            }
-//                            else {
-//                                priority = priority.trimmingCharacters(in: .whitespacesAndNewlines)
-//                            }
-//                        }
-//                }
             }
             .navigationBarTitle("New Goal", displayMode: .inline)
             .navigationBarItems(
@@ -83,16 +58,9 @@ struct AddGoalView: View {
                     self.isPresented = false
                 }.foregroundColor(.red),
                 trailing: Button("Add") {
-                    if(title.count>0 &&
-                       amount.count>0 &&
-//                       priority.count>0 &&
-                       Int64(amount)!>0
-//                       Int(priority)!>0
-                    ) {
-                        
-                        
+                    if(title.count>0 && amount.count>0 && Int64(amount)!>0) {
                         let activeGoals = goals
-                            .filter{ $0.status == false }
+                            .filter{ $0.status == true }
                             .sorted { $0.priority < $1.priority }
                         
                         // Cek jumlah goal
