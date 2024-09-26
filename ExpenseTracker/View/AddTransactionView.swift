@@ -43,9 +43,20 @@ struct AddTransactionView: View {
                     Text("Expenses").tag("Expenses")
                 }
                 .pickerStyle(SegmentedPickerStyle())
-                .onChange(of: transactionType) { _ in
-                    category = ""
-                }
+                .onChange(of: transactionType, { oldValue, newValue in
+                    if newValue == "Income" {
+                        category = "Salary"
+                    } else if newValue == "Expenses" {
+                        category = "Living"
+                    }
+                })
+//                .onChange(of: transactionType, perform: { newValue in
+//                    if newValue == "Income" {
+//                        category = "Salary"
+//                    } else if newValue == "Expenses" {
+//                        category = "Living"
+//                    }
+//                })
 
                 HStack {
                     Text("Rp").foregroundColor(.black)
