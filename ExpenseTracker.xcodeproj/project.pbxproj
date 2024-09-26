@@ -26,6 +26,7 @@
 		041212722C98ABEA001333F1 /* GoalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041212712C98ABE9001333F1 /* GoalsView.swift */; };
 		043328412C9C274F0086D79B /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043328402C9C274F0086D79B /* Example.swift */; };
 		043328432C9C39ED0086D79B /* AddGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043328422C9C39ED0086D79B /* AddGoalView.swift */; };
+		0435531B2CA5C92300F7BA28 /* EditTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0435531A2CA5C92300F7BA28 /* EditTransactionView.swift */; };
 		046C56422C9A740300759965 /* GoalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046C56412C9A740300759965 /* GoalModel.swift */; };
 		046D74812CA038F2003AEDA6 /* TestCustomListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046D74802CA038F2003AEDA6 /* TestCustomListView.swift */; };
 		047C62302CA2462F00B4DF85 /* EditGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047C622F2CA2462F00B4DF85 /* EditGoalView.swift */; };
@@ -76,6 +77,7 @@
 		041212712C98ABE9001333F1 /* GoalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsView.swift; sourceTree = "<group>"; };
 		043328402C9C274F0086D79B /* Example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example.swift; sourceTree = "<group>"; };
 		043328422C9C39ED0086D79B /* AddGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGoalView.swift; sourceTree = "<group>"; };
+		0435531A2CA5C92300F7BA28 /* EditTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionView.swift; sourceTree = "<group>"; };
 		046C56412C9A740300759965 /* GoalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalModel.swift; sourceTree = "<group>"; };
 		046D74802CA038F2003AEDA6 /* TestCustomListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCustomListView.swift; sourceTree = "<group>"; };
 		047C622F2CA2462F00B4DF85 /* EditGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGoalView.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				041212632C984179001333F1 /* IncomeView.swift */,
 				041212652C984192001333F1 /* ExpenseView.swift */,
 				041212672C9846F6001333F1 /* AddTransactionView.swift */,
+				0435531A2CA5C92300F7BA28 /* EditTransactionView.swift */,
 				043328402C9C274F0086D79B /* Example.swift */,
 				0412126E2C987489001333F1 /* SplashScreenView.swift */,
 				041212712C98ABE9001333F1 /* GoalsView.swift */,
@@ -367,6 +370,7 @@
 				041212662C984192001333F1 /* ExpenseView.swift in Sources */,
 				04F73F2A2C9D27E00028AA83 /* SavingsModel.swift in Sources */,
 				04F73F2C2C9D28890028AA83 /* SavingsView.swift in Sources */,
+				0435531B2CA5C92300F7BA28 /* EditTransactionView.swift in Sources */,
 				041212322C983076001333F1 /* ContentView.swift in Sources */,
 				04CDC0252C9E876B00D76717 /* BalanceModel.swift in Sources */,
 				0412126C2C9855A8001333F1 /* AppCardTransaction.swift in Sources */,

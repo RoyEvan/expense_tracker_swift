@@ -1,28 +1,30 @@
-//  AddTransactionView.swift
+//
+//  EditTransactionView.swift
 //  ExpenseTracker
 //
-//  Created by MacBook Air on 16/09/24.
+//  Created by MacBook Air on 26/09/24.
 //
 
-import SwiftData
 import SwiftUI
+import SwiftData
 
-struct AddTransactionView: View {
+struct EditTransactionView: View {
     @Binding var isPresented: Bool
-    @State var showAlert: Bool = false
-    @State var insufficientBalance: Bool = false
-    @State var showConfirmationAlert: Bool = false
-    @State var showZeroAlert: Bool = false
+    @Binding var transaction: TransactionModel // Binding to the transaction being edited
     
-    @State private var transactionType = "Income"
-    @State private var amount: String = ""
-    @State private var category: String = "Salary"
-    @State private var transactionDate = Date()
-    @State private var isMonthly = false
+    @State private var showAlert = false
+    @State private var showZeroAlert = false
+    @State private var insufficientBalance = false
+    @State private var showConfirmationAlert = false
+    
+    @State private var transactionType: String
+    @State private var amount: String
+    @State private var category: String
+    @State private var transactionDate: Date
+    @State private var isMonthly: Bool
 
     @Environment(\.modelContext) var modelContext
     @Query(sort: \BalanceModel.date_logged, order: .reverse) var balance: [BalanceModel]
-    @Query(sort: \GoalModel.priority, order: .forward) var goals: [GoalModel]
 
     private var numberFormatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -31,7 +33,17 @@ struct AddTransactionView: View {
         formatter.maximumFractionDigits = 0
         return formatter
     }
-    
+
+    init(isPresented: Binding<Bool>, transaction: Binding<TransactionModel>) {
+        _isPresented = isPresented
+        _transaction = transaction
+        _transactionType = State(initialValue: transaction.wrappedValue.status ? "Income" : "Expenses")
+        _amount = State(initialValue: String(transaction.wrappedValue.amount))
+        _category = State(initialValue: transaction.wrappedValue.category)
+        _transactionDate = State(initialValue: transaction.wrappedValue.date)
+        _isMonthly = State(initialValue: transaction.wrappedValue.monthly)
+    }
+
     var body: some View {
         NavigationView {
             Form {
@@ -66,12 +78,12 @@ struct AddTransactionView: View {
                     Text("Monthly")
                 }
             }
-            .navigationBarTitle("New Transaction", displayMode: .inline)
+            .navigationBarTitle("Edit Transaction", displayMode: .inline)
             .navigationBarItems(
                 leading: Button("Cancel") {
                     self.isPresented = false
                 }.foregroundColor(.red),
-                trailing: Button("Add") {
+                trailing: Button("Save") {
                     if amount.isEmpty {
                         showAlert = true
                     } else if let amountValue = getIntAmount(from: amount), amountValue == 0 {
@@ -117,9 +129,9 @@ struct AddTransactionView: View {
             .alert(isPresented: $showConfirmationAlert) {
                 Alert(
                     title: Text("Confirm Transaction"),
-                    message: Text("Are you sure you want to add this transaction?"),
+                    message: Text("Are you sure you want to save these changes?"),
                     primaryButton: .destructive(Text("Confirm")) {
-                        addTransaction()
+                        saveTransaction()
                     },
                     secondaryButton: .cancel()
                 )
@@ -138,54 +150,50 @@ struct AddTransactionView: View {
         }
     }
 
-    private func addTransaction() {
-        if amount.count > 0 {
-            guard let unformattedAmount = getIntAmount(from: amount) else { return }
-            
+    private func saveTransaction() {
+        if let unformattedAmount = getIntAmount(from: amount) {
             if transactionType.lowercased() == "income" {
-                let newTransaction = TransactionModel(category: category, date: transactionDate, amount: unformattedAmount, status: true, monthly: isMonthly)
+                transaction.status = true
+                transaction.category = category
+                transaction.date = transactionDate
+                transaction.amount = unformattedAmount
+                transaction.monthly = isMonthly
                 
-                modelContext.insert(newTransaction)
-                
-                guard let currentBalance = balance.first else { return }
-
-                var incomeLeft = unformattedAmount + currentBalance.needs
-                let additionalSaving = Int64(Double(unformattedAmount) * 0.2)
-                let savingSaved = currentBalance.savings + additionalSaving
-                incomeLeft -= additionalSaving
-
-                let additionalGoalSaving = Int64(Double(unformattedAmount) * 0.3)
-                let goalSaved = currentBalance.goals + additionalGoalSaving
-                incomeLeft -= additionalGoalSaving
-                
-                let newBalance = BalanceModel(needs: incomeLeft, savings: savingSaved, goals: goalSaved, date_logged: transactionDate)
-                modelContext.insert(newBalance)
-
-                let month = DateFormatter().monthSymbols[Calendar.current.component(.month, from: Date()) - 1]
-                let newSaving = Saving(title: "20% from \(month) Income", date: transactionDate, amount: additionalSaving)
-                modelContext.insert(newSaving)
-
+                updateBalance(with: unformattedAmount, isIncome: true)
                 self.isPresented = false
             } else if transactionType.lowercased() == "expenses" {
-                let spending = unformattedAmount
-                
-                guard let currentBalance = balance.first, currentBalance.needs >= spending else {
+                guard let currentBalance = balance.first, currentBalance.needs >= unformattedAmount else {
                     insufficientBalance = true
                     return
                 }
+                transaction.status = false
+                transaction.category = category
+                transaction.date = transactionDate
+                transaction.amount = -unformattedAmount
+                transaction.monthly = isMonthly
                 
-                let newTransaction = TransactionModel(category: category, date: transactionDate, amount: -spending, status: false, monthly: isMonthly)
-                modelContext.insert(newTransaction)
-                
-                let needsBalance = currentBalance.needs - spending
-                let newBalance = BalanceModel(needs: needsBalance, savings: currentBalance.savings, goals: currentBalance.goals, date_logged: transactionDate)
-                modelContext.insert(newBalance)
-                
+                updateBalance(with: unformattedAmount, isIncome: false)
                 self.isPresented = false
             }
         }
     }
-    
+
+    private func updateBalance(with amount: Int64, isIncome: Bool) {
+        guard let currentBalance = balance.first else { return }
+        if isIncome {
+            let newNeeds = currentBalance.needs + amount
+            let newSavings = currentBalance.savings + Int64(Double(amount) * 0.2)
+            let newGoals = currentBalance.goals + Int64(Double(amount) * 0.3)
+            
+            let updatedBalance = BalanceModel(needs: newNeeds - newSavings - newGoals, savings: newSavings, goals: newGoals, date_logged: transactionDate)
+            modelContext.insert(updatedBalance)
+        } else {
+            let newNeeds = currentBalance.needs - amount
+            let updatedBalance = BalanceModel(needs: newNeeds, savings: currentBalance.savings, goals: currentBalance.goals, date_logged: transactionDate)
+            modelContext.insert(updatedBalance)
+        }
+    }
+
     private func formatAmountInput() {
         let cleanAmount = amount.filter { $0.isNumber }
         if let number = Int(cleanAmount), let formattedAmount = numberFormatter.string(from: NSNumber(value: number)) {
@@ -198,7 +206,7 @@ struct AddTransactionView: View {
         return Int64(cleanAmount)
     }
 }
-
-#Preview {
-    AddTransactionView(isPresented: .constant(true))
-}
+//
+//#Preview {
+//    EditTransactionView(isPresented: .constant(true), transaction: .)
+//}
